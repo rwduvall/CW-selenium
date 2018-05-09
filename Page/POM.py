@@ -1,6 +1,5 @@
 from selenium import webdriver
 from selenium.webdriver.common.by import By
-import Page.locators
 from selenium.webdriver.common import by
 from selenium.webdriver.support import expected_conditions as EC
 from selenium.webdriver.support.ui import WebDriverWait
@@ -99,4 +98,28 @@ class Footer(object):
         link = self.driver.find_element_by_xpath("""//*[@id="footer"]/div/div[1]/div[2]/ul/li[5]/a""")
         wait = WebDriverWait(self.driver, 10)
         wait.until(EC.element_to_be_clickable((By.XPATH, """//*[@id="footer"]/div/div[1]/div[2]/ul/li[5]/a""")))
+        link.click()
+
+    def quick_links_events(self):
+        link = self.driver.find_element_by_xpath("""//*[@id="footer"]/div/div[1]/div[2]/ul/li[6]/a""")
+        wait = WebDriverWait(self.driver, 10)
+        wait.until(EC.element_to_be_clickable((By.XPATH, """//*[@id="footer"]/div/div[1]/div[2]/ul/li[6]/a""")))
+        link.click()
+
+    def quick_links_talks(self):
+        link = self.driver.find_element_by_xpath("""//*[@id="footer"]/div/div[1]/div[2]/ul/li[7]/a""")
+        wait = WebDriverWait(self.driver, 10)
+        wait.until(EC.element_to_be_clickable((By.XPATH, """//*[@id="footer"]/div/div[1]/div[2]/ul/li[7]/a""")))
+        link.click()
+
+    def quick_links_press(self):
+        link = self.driver.find_element_by_xpath("""//*[@id="footer"]/div/div[1]/div[2]/ul/li[8]/a""")
+        wait = WebDriverWait(self.driver, 10)
+        wait.until(EC.element_to_be_clickable((By.XPATH, """//*[@id="footer"]/div/div[1]/div[2]/ul/li[8]/a""")))
+        link.click()
+
+    def quick_links_contact(self):
+        link = self.driver.find_element_by_xpath("""//*[@id="footer"]/div/div[1]/div[2]/ul/li[9]/a""")
+        wait = WebDriverWait(self.driver, 10)
+        wait.until(EC.element_to_be_clickable((By.XPATH, """//*[@id="footer"]/div/div[1]/div[2]/ul/li[9]/a""")))
         link.click()
