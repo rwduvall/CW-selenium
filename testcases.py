@@ -49,11 +49,9 @@ class SmokeTest(unittest.TestCase):
         # add a verification step here
 
     def test_casestudies_cards_navigation(self):
-        # Verify that
+        # Verify the featured case study on the homepage takes the user to the correct page
         self.homepage.click_featured_case_study()
-        # see if there is a way to use an assert here that knows what the featured case study is
-        print("This should be the name of the case study featured on the homepage: " + self.driver.title)
-        #    self.driver.get_screenshot_as_file("/Users/robbie/Desktop/auto/test_CS_cards_nav_%s.png" % self.screen_name)
+        assert self.driver.title == "Django and SMS App Development Case Studies | Caktus Group"
 
     def test_count_blog_cards(self):
         # use the page object to nav to blog page instead of find element here
@@ -70,7 +68,6 @@ class SmokeTest(unittest.TestCase):
     # see if I can figure out how to test "Tech Talks card in resources section has most recent talk"
 
     # Footer tests cases:
-    # Maybe it would be better to test by the H1 then the title??
     def test_footer_services(self):
         # Verify that services link in footer loads correct page
         self.footer.quick_links_services()
@@ -80,7 +77,6 @@ class SmokeTest(unittest.TestCase):
         # Verify that our work link in footer loads correct page
         self.footer.quick_links_our_work()
         assert self.driver.title == "Django and SMS App Development Case Studies | Caktus Group"
-        print("should be our work: " + self.driver.title)
 
     def test_quick_links_about_us(self):
         # Verify that about us link in footer loads correct page
@@ -115,13 +111,12 @@ class SmokeTest(unittest.TestCase):
     def test_footer_contact(self):
         # Verify that press link in footer loads correct page
         self.footer.quick_links_press()
-        assert self.driver.title == "Contact Us for Custom Web Development | Caktus Group", \
-            self.driver.get_screenshot_as_file("/Users/robbie/Desktop/auto/count_blog_cards_%s.png" % self.screen_name)
-
+        assert self.driver.title == "Contact Us for Custom Web Development | Caktus Group"
 
 
 class ContactFormTest(unittest.TestCase):
 
+    # need to add the variable to the set up for this class
     def setUp(self):
         self.driver = webdriver.Chrome("/Users/robbie/Downloads/chromedriver")
         self.driver.get("https://caktus:pointy@staging.caktusgroup.com")
@@ -142,6 +137,7 @@ class ContactFormTest(unittest.TestCase):
 
 class OtherTests(unittest.TestCase):
 
+    # need to add the variable to the set up for this class
     def setUp(self):
         self.driver = webdriver.Chrome("/Users/robbie/Downloads/chromedriver")
 
