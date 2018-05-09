@@ -3,6 +3,7 @@ from selenium.webdriver.common.by import By
 from selenium.webdriver.common import by
 from selenium.webdriver.support import expected_conditions as EC
 from selenium.webdriver.support.ui import WebDriverWait
+from selenium.webdriver.support.ui import Select
 
 
 class TopNav(object):
@@ -57,6 +58,20 @@ class Homepage(object):
 
     def click_featured_case_study(self):
         self.driver.find_element_by_class_name("card-case-study").click()
+
+
+class EventsPage(object):
+
+    def __init__(self, driver):
+        self.driver = driver
+
+    def event_dropdwon_select_year(self):
+        select = Select(self.driver.find_element_by_id("event-year"))
+        select.select_by_value("2018")
+        # self.driver.Select(self.driver.find_element_by_id("event-year")).select_by_value(value)
+
+    def date_field(self):
+        self.driver.find_elements_by_class_name("call-out")
 
 
 class Footer(object):

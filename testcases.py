@@ -1,20 +1,13 @@
 import unittest
 from selenium import webdriver
-from selenium.webdriver.support.ui import WebDriverWait
-from selenium.common.exceptions import TimeoutException
-from selenium.webdriver.support import expected_conditions as EC
+from selenium.webdriver.support.ui import Select
+
 from datetime import datetime
 from time import sleep
-from selenium.webdriver.support.ui import Select
-# seems like I shouldn't have to import each class
-from Page.POM import TopNav
-from Page.POM import ContactForm
-from Page.POM import Homepage
-from Page.POM import Footer
-from selenium.webdriver.common import by
+
+from Page.POM import TopNav, ContactForm, Homepage, Footer, EventsPage
 
 # should find a way to make the links work for either environment if we are really going to use this
-# what would it take it take to get selenium set up on CW?
 # headless driver
 
 
@@ -35,35 +28,32 @@ class SmokeTest(unittest.TestCase):
         cls.driver.quit()
 
     def test_verify_blog_page_title(self):
-        # Navigates to the blog and verifies the title includes the word Blog
-
+        # Navigates to the blog with the top navigation and verifies the title includes the word Blog
         self.topnav.nav_to_blog()
         # verify that Blog is in the title of the blog page
         self.assertIn("Blog", self.driver.title)
-        #    self.driver.get_screenshot_as_file("/Users/robbie/Desktop/auto/blog_page_title_%s.png" % self.screen_name)
 
     def test_hero_button_loads_services_page(self):
         # Verify that the button in the hero image loads the services page
         self.topnav.nav_to_homepage()
         self.homepage.click_hero_image_button()
-        # add a verification step here
+        assert self.driver.title == "Web Development and Consulting Services | Caktus Group"
 
     def test_casestudies_cards_navigation(self):
         # Verify the featured case study on the homepage takes the user to the correct page
         self.homepage.click_featured_case_study()
-        assert self.driver.title == "Django and SMS App Development Case Studies | Caktus Group"
+        assert self.driver.title == "Live Event Management App | Caktus Group"
 
     def test_count_blog_cards(self):
-        # use the page object to nav to blog page instead of find element here
+        # Verify that clicking view more on the blog page loads 6 more posts for a total of 12
         self.topnav.nav_to_blog()
         # click view more posts and wait(sleep)
         self.driver.find_element_by_id("next").click()
         sleep(3)
-        # count the number of cards
+        # count the number of cards. Finding by class name in the test is not the best practice should change this later
         posts_count = self.driver.find_elements_by_class_name("card-common--image_container")
         # verify the number of posts that display
         assert (len(posts_count) == 12)
-        #    self.driver.get_screenshot_as_file("/Users/robbie/Desktop/auto/count_blog_cards_%s.png" % self.screen_name)
 
     # see if I can figure out how to test "Tech Talks card in resources section has most recent talk"
 
@@ -110,49 +100,50 @@ class SmokeTest(unittest.TestCase):
 
     def test_footer_contact(self):
         # Verify that press link in footer loads correct page
-        self.footer.quick_links_press()
+        self.footer.quick_links_contact()
         assert self.driver.title == "Contact Us for Custom Web Development | Caktus Group"
 
 
 class ContactFormTest(unittest.TestCase):
 
     # need to add the variable to the set up for this class
-    def setUp(self):
-        self.driver = webdriver.Chrome("/Users/robbie/Downloads/chromedriver")
-        self.driver.get("https://caktus:pointy@staging.caktusgroup.com")
+    @classmethod
+    def setUpClass(cls):
+        cls.driver = webdriver.Chrome("/Users/robbie/Downloads/chromedriver")
+        cls.driver.get("https://caktus:pointy@staging.caktusgroup.com")
+        cls.topnav = TopNav(cls.driver)
+        cls.contactfrom = ContactForm(cls.driver)
 
     def tearDown(self):
         self.driver.quit()
 
     def test_contact_form(self):
         # Use the POM class to navigate to contact page
-        navigation = TopNav(self.driver)
-        navigation.nav_to_contact()
+        self.topnav.nav_to_contact()
         # Use the POM class to enter text in the contact form
-        form = ContactForm(self.driver)
-        form.first_name("MRtest")
-        form.last_name("LastName")
-        form.email("example@example.com")
+        self.contactfrom.first_name("MRtest")
+        self.contactfrom.last_name("LastName")
+        self.contactfrom.email("example@example.com")
 
 
 class OtherTests(unittest.TestCase):
 
     # need to add the variable to the set up for this class
-    def setUp(self):
-        self.driver = webdriver.Chrome("/Users/robbie/Downloads/chromedriver")
+    @classmethod
+    def setUpClass(cls):
+        cls.driver = webdriver.Chrome("/Users/robbie/Downloads/chromedriver")
+        cls.driver.get("https://caktus:pointy@staging.caktusgroup.com/events/")
+        cls.eventpage = EventsPage
 
     def tearDown(self):
         self.driver.quit()
 
     def test_4(self):
         # test that events match drop down selection
-        self.driver.get("https://caktus:pointy@staging.caktusgroup.com/events/")
-        # select an option from the drop down on events page by the visible text
-        select = Select(self.driver.find_element_by_id("event-year"))
-        select.select_by_value("2018")
+        # select an option from the drop down on events page
+        self.eventpage.event_dropdwon_select_year()
         # verify the year in the date field
-        # event_date = self.driver.find_elements_by_class_name("call-out")
-        # self.assertIn("2018", event_date)
+        self.assertIn("2018", self.eventpage.date_field[])
 
 
 if __name__ == '__main__':
