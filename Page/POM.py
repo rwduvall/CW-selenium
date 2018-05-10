@@ -74,6 +74,40 @@ class EventsPage(object):
         self.driver.find_elements_by_class_name("call-out")
 
 
+class ServicesLandingPage(object):
+
+    def __init__(self, driver):
+        self.driver = driver
+
+    def first_card(self):
+        link = self.driver.find_element_by_xpath("""//*[@class="card-wrapper full"]/li[1]""")
+        wait = WebDriverWait(self.driver, 10)
+        wait.until(EC.element_to_be_clickable((By.XPATH, link)))
+        link.click()
+
+    def second_card(self):
+        link = self.driver.find_element_by_xpath("""//*[@class="card-wrapper full"]/li[2]""")
+        wait = WebDriverWait(self.driver, 10)
+        wait.until(EC.element_to_be_clickable((By.XPATH, link)))
+        link.click()
+
+    def contact_button(self):
+        link = self.driver.find_element_by_class("contact-button")
+        wait = WebDriverWait(self.driver, 10)
+        wait.until(EC.element_to_be_clickable((By.XPATH, link)))
+        link.click()
+
+
+class ServiceDetail(object):
+
+    def __init__(self, driver):
+        self.driver = driver
+
+    def see_more(self):
+        link = self.driver.find_element_by_class("link-common-breadcrumb")
+        link.click()
+
+
 class Footer(object):
 
     def __init__(self, driver):

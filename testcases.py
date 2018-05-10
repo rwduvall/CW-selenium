@@ -5,7 +5,7 @@ from selenium.webdriver.support.ui import Select
 from datetime import datetime
 from time import sleep
 
-from Page.POM import TopNav, ContactForm, Homepage, Footer, EventsPage
+from Page.POM import TopNav, ContactForm, Homepage, Footer, EventsPage, ServicesLandingPage, ServiceDetail
 
 # should find a way to make the links work for either environment if we are really going to use this
 # headless driver
@@ -22,6 +22,8 @@ class SmokeTest(unittest.TestCase):
         cls.topnav = TopNav(cls.driver)
         cls.homepage = Homepage(cls.driver)
         cls.footer = Footer(cls.driver)
+        cls.services = ServicesLandingPage(cls.driver)
+        cls.service_detail = ServiceDetail(cls.driver)
 
     @classmethod
     def tearDownClass(cls):
@@ -103,6 +105,21 @@ class SmokeTest(unittest.TestCase):
         self.footer.quick_links_contact()
         assert self.driver.title == "Contact Us for Custom Web Development | Caktus Group"
 
+    # Services Page
+    def test_services_first_card(self):
+        self.services.first_card()
+        assert self.driver.title == "| Caktus Group"
+
+    def test_servicedetail_see_more(self):
+        self.service_detail.see_more()
+        assert self.driver.title == "Web Development and Consulting Services | Caktus Group"
+
+    def test_services_second_card(self):
+        self.services.second_card()
+        assert self.driver.title == "| Caktus Group"
+        # Navigate back to services page for the next test
+        self.service_detail.see_more()
+
 
 class ContactFormTest(unittest.TestCase):
 
@@ -125,7 +142,7 @@ class ContactFormTest(unittest.TestCase):
         self.contactfrom.last_name("LastName")
         self.contactfrom.email("example@example.com")
 
-
+"""
 class OtherTests(unittest.TestCase):
 
     # need to add the variable to the set up for this class
@@ -141,10 +158,10 @@ class OtherTests(unittest.TestCase):
     def test_4(self):
         # test that events match drop down selection
         # select an option from the drop down on events page
-        self.eventpage.event_dropdwon_select_year()
+        self.eventpage.event_dropdwon_select_year(1)
         # verify the year in the date field
-        self.assertIn("2018", self.eventpage.date_field[])
-
+        self.assertIn("2018", self.eventpage.date_field())
+"""
 
 if __name__ == '__main__':
     unittest.main()
