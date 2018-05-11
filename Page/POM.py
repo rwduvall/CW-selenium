@@ -4,6 +4,7 @@ from selenium.webdriver.common import by
 from selenium.webdriver.support import expected_conditions as EC
 from selenium.webdriver.support.ui import WebDriverWait
 from selenium.webdriver.support.ui import Select
+from Page.Locators import TopNavLocators
 
 
 class TopNav(object):
@@ -12,10 +13,11 @@ class TopNav(object):
         self.driver = driver
 
     def nav_to_homepage(self):
-        self.driver.find_element_by_class_name("navbar-brand").click()
+        element = self.driver.find_element(*TopNavLocators.logo)
+        element.click()
 
     def nav_to_blog(self):
-        self.driver.find_element_by_class_name("posts").click()
+        self.driver.find_element_by_class_name("posts").click
 
     def nav_to_services(self):
         self.driver.find_element_by_class_name("service-page").click()

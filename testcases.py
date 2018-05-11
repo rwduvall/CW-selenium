@@ -9,6 +9,7 @@ from Page.POM import TopNav, ContactForm, Homepage, Footer, EventsPage, Services
 
 # should find a way to make the links work for either environment if we are really going to use this
 # headless driver
+# create a wait until clickable function
 
 
 class SmokeTest(unittest.TestCase):
@@ -162,6 +163,20 @@ class OtherTests(unittest.TestCase):
         # verify the year in the date field
         self.assertIn("2018", self.eventpage.date_field())
 """
+
+class A(unittest.TestCase):
+
+    # need to add the variable to the set up for this class
+    @classmethod
+    def setUpClass(cls):
+        cls.driver = webdriver.Chrome("/Users/robbie/Downloads/chromedriver")
+        cls.driver.get("https://caktus:pointy@staging.caktusgroup.com")
+        cls.asdf = TopNav(cls.driver)
+
+    def test_1(self):
+        self.asdf.nav_to_contact()
+        self.asdf.nav_to_homepage()
+
 
 if __name__ == '__main__':
     unittest.main()
