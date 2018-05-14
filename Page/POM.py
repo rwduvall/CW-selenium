@@ -3,12 +3,17 @@ from selenium.webdriver.common.by import By
 from selenium.webdriver.support import expected_conditions as EC
 from selenium.webdriver.support.ui import WebDriverWait
 from selenium.webdriver.support.ui import Select
-from Page.Locators import TopNavLocators, FooterQuickLinks, HomepageLocators
+from Page.Locators import TopNavLocators, FooterLinks, HomepageLocators
 
 # using link = ... so that its easier to come back later and add waits if I need to
 
 # class WaitTill(object):
-# can't get this to work
+# can't get a wait class to work
+# https://github.com/levi-rs/explicit/blob/master/explicit/waiter.py
+# def element_clickable_xpath(driver, elm_path, by, timeout=TIMEOUT, poll_frequency=0.5):
+    # wait = WebDriverWait(timeout, poll_frequency)
+    # return wait.until(EC.element_to_be_clickable((by, elm_path)))
+
 
 class Base(object):
 
@@ -45,7 +50,6 @@ class TopNav(Base):
 
 class ContactForm(Base):
 
-
     def first_name(self, first_name):
         self.driver.find_element_by_name("firstname").send_keys(first_name)
 
@@ -57,7 +61,6 @@ class ContactForm(Base):
 
 
 class Homepage(Base):
-
 
     def click_hero_image_button(self):
         hero_button = self.driver.find_element_by_class_name("button")
@@ -93,7 +96,6 @@ class Homepage(Base):
 
 class EventsPage(Base):
 
-
     def event_dropdwon_select_year(self):
         select = Select(self.driver.find_element_by_id("event-year"))
         select.select_by_value("2018")
@@ -124,10 +126,7 @@ class ServicesLandingPage(Base):
         link.click()
 
 
-class ServiceDetail(object):
-
-    def __init__(self, driver):
-        self.driver = driver
+class ServiceDetail(Base):
 
     def see_more(self):
         link = self.driver.find_element_by_class_name("link-common-breadcrumb")
@@ -194,7 +193,15 @@ class Footer(Base):
 
     def quick_links_contact(self):
         # link = self.driver.find_element_by_xpath("""//*[@class="half site-map"]/ul/li[9]/a""")
-        link = self.driver.find_element(*FooterQuickLinks.contact)
+        link = self.driver.find_element(*FooterLinks.contact)
         wait = WebDriverWait(self.driver, 10)
         wait.until(EC.element_to_be_clickable((By.XPATH, """//*[@class="half site-map"]/ul/li[9]/a""")))
+        link.click()
+
+    def privacy_policy(self):
+        link = self.driver.find_element(*FooterLinks.privacy_policy)
+        link.click()
+
+    def twitter(self):
+        link = self.driver.find_element(*FooterLinks.twittericon)
         link.click()

@@ -13,7 +13,7 @@ from Page.Locators import PageTitles
 # create a wait until clickable function
 
 
-#class SmokeTests(unittest.TestCase):
+# class SmokeTests(unittest.TestCase):
 # Maybe this needs to be its own file that calls tests from other places
 
 
@@ -22,7 +22,7 @@ class HomePageTests(unittest.TestCase):
     @classmethod
     def setUpClass(cls):
         cls.driver = webdriver.Chrome("/Users/robbie/Downloads/chromedriver")
-        cls.driver.maximize_window()
+        cls.driver.set_window_size(1920, 1080)
         cls.driver.get("https://caktus:pointy@staging.caktusgroup.com")
         cls.screen_name = datetime.now()
 
@@ -34,17 +34,17 @@ class HomePageTests(unittest.TestCase):
         # Verify that the button in the hero image loads the services page
         TopNav(self.driver).nav_to_homepage()
         Homepage(self.driver).click_hero_image_button()
-        assert self.driver.title == "Web Development and Consulting Services | Caktus Group"
+        assert self.driver.title == PageTitles.services
 
     def test_success_model_link(self):
         TopNav(self.driver).nav_to_homepage()
         Homepage(self.driver).click_why_caktus_success_model()
-        assert self.driver.title == "The Caktus Success Model | Caktus Group"
+        assert self.driver.title == PageTitles.success_model_blog
 
     def test_homepage_service_card_1(self):
         TopNav(self.driver).nav_to_homepage()
         Homepage(self.driver).click_service_card_1()
-        assert self.driver.title == PageTitles.service_card_1_title
+        assert self.driver.title == PageTitles.service_card_1
 
     def test_view_services_button(self):
         TopNav(self.driver).nav_to_homepage()
@@ -55,7 +55,7 @@ class HomePageTests(unittest.TestCase):
         TopNav(self.driver).nav_to_homepage()
         # Verify the featured case study on the homepage takes the user to the correct page
         Homepage(self.driver).click_featured_case_study()
-        assert self.driver.title == "Live Event Management App | Caktus Group"
+        assert self.driver.title == PageTitles.featured_casestudy
 
     def test_read_our_case_studies_button(self):
         TopNav(self.driver).nav_to_homepage()
@@ -73,7 +73,7 @@ class BlogPage(unittest.TestCase):
     @classmethod
     def setUpClass(cls):
         cls.driver = webdriver.Chrome("/Users/robbie/Downloads/chromedriver")
-        cls.driver.maximize_window()
+        cls.driver.set_window_size(1920, 1080)
         cls.driver.get("https://caktus:pointy@staging.caktusgroup.com")
         cls.screen_name = datetime.now()
 
@@ -108,7 +108,7 @@ class FooterTests(unittest.TestCase):
     @classmethod
     def setUpClass(cls):
         cls.driver = webdriver.Chrome("/Users/robbie/Downloads/chromedriver")
-        cls.driver.maximize_window()
+        cls.driver.set_window_size(1920, 1080)
         cls.driver.get("https://caktus:pointy@staging.caktusgroup.com")
         cls.screen_name = datetime.now()
 
@@ -116,51 +116,73 @@ class FooterTests(unittest.TestCase):
     def tearDownClass(cls):
         cls.driver.quit()
 
-# Quick links
+    # Quick links
     def test_footer_services(self):
         # Verify that services link in footer loads correct page
         Footer(self.driver).quick_links_services()
-        assert self.driver.title == "Web Development and Consulting Services | Caktus Group"
+        assert self.driver.title == PageTitles.services
 
     def test_footer_our_work(self):
         # Verify that our work link in footer loads correct page
         Footer(self.driver).quick_links_our_work()
-        assert self.driver.title == "Django and SMS App Development Case Studies | Caktus Group"
+        assert self.driver.title == PageTitles.casestudies
 
     def test_quick_links_about_us(self):
         # Verify that about us link in footer loads correct page
         Footer(self.driver).quick_links_about_us()
-        assert self.driver.title == "About Caktus Group | Django Web Development"
+        assert self.driver.title == PageTitles.about_us
 
     def test_quick_links_blog(self):
         # Verify that blog link in footer loads correct page
         Footer(self.driver).quick_links_blog()
-        assert self.driver.title == "Blog | Django and Python Tutorials | News | Caktus Group"
+        assert self.driver.title == PageTitles.blog
 
     def test_footer_careers(self):
         # Verify that careers link in footer loads correct page
         Footer(self.driver).quick_links_careers()
-        assert self.driver.title == "Careers | Caktus Group"
+        assert self.driver.title == PageTitles.careers
 
     def test_footer_events(self):
         # Verify that events link in footer loads correct page
         Footer(self.driver).quick_links_events()
-        assert self.driver.title == "Events in Durham and Beyond | Caktus Group"
+        assert self.driver.title == PageTitles.events
 
     def test_footer_talks(self):
         # Verify that talks link in footer loads correct page
         Footer(self.driver).quick_links_talks()
-        assert self.driver.title == "Web Development Talks | Caktus Group"
+        assert self.driver.title == PageTitles.talks
 
     def test_footer_press(self):
         # Verify that press link in footer loads correct page
         Footer(self.driver).quick_links_press()
-        assert self.driver.title == "Awards and Press | Caktus Group"
+        assert self.driver.title == PageTitles.press
 
     def test_footer_contact(self):
         # Verify that press link in footer loads correct page
         Footer(self.driver).quick_links_contact()
-        assert self.driver.title == "Contact Us for Custom Web Development | Caktus Group"
+        assert self.driver.title == PageTitles.contact
+
+    def test_privacy_policy(self):
+        Footer(self.driver).privacy_policy()
+        assert self.driver.title == PageTitles.privacy_policy
+
+
+class FooterSocial(unittest.TestCase):
+
+    def setUp(self):
+        self.driver = webdriver.Chrome("/Users/robbie/Downloads/chromedriver")
+        self.driver.set_window_size(1920, 1080)
+        self.driver.get("https://caktus:pointy@staging.caktusgroup.com")
+
+    def tearDown(self):
+        self.driver.quit()
+
+    def test_twitter(self):
+        Footer(self.driver).twitter()
+        self.driver.switch_to.window(main_window)
+        print(self.driver.current_url)
+        # need to figure out how to switch tabs
+        assert self.driver.title == "Caktus Group (@CaktusGroup) | Twitter"
 
 
 class ServicesTests(unittest.TestCase):
@@ -168,7 +190,7 @@ class ServicesTests(unittest.TestCase):
     @classmethod
     def setUpClass(cls):
         cls.driver = webdriver.Chrome("/Users/robbie/Downloads/chromedriver")
-        cls.driver.maximize_window()
+        cls.driver.set_window_size(1920, 1080)
         cls.driver.get("https://caktus:pointy@staging.caktusgroup.com")
         cls.screen_name = datetime.now()
 
@@ -180,18 +202,18 @@ class ServicesTests(unittest.TestCase):
     def test_services_first_card(self):
         TopNav(self.driver).nav_to_services()
         ServicesLandingPage(self.driver).first_card()
-        assert self.driver.title == PageTitles.service_card_1_title
+        assert self.driver.title == PageTitles.service_card_1
 
     def test_servicedetail_see_more(self):
         TopNav(self.driver).nav_to_services()
         ServicesLandingPage(self.driver).first_card()
         ServiceDetail(self.driver).see_more()
-        assert self.driver.title == "Web Development and Consulting Services | Caktus Group"
+        assert self.driver.title == PageTitles.services
 
     def test_services_second_card(self):
         TopNav(self.driver).nav_to_services()
         ServicesLandingPage(self.driver).second_card()
-        assert self.driver.title == PageTitles.service_card_2_title
+        assert self.driver.title == PageTitles.service_card_2
         # Navigate back to services page for the next test
         ServiceDetail(self.driver).see_more()
 
@@ -203,8 +225,7 @@ class ContactFormTest(unittest.TestCase):
     def setUpClass(cls):
         cls.driver = webdriver.Chrome("/Users/robbie/Downloads/chromedriver")
         cls.driver.get("https://caktus:pointy@staging.caktusgroup.com")
-        cls.topnav = TopNav(cls.driver)
-        cls.contactfrom = ContactForm(cls.driver)
+        cls.driver.set_window_size(1920, 1080)
 
     @classmethod
     def tearDownClass(cls):
@@ -214,11 +235,11 @@ class ContactFormTest(unittest.TestCase):
         # Use the POM class to navigate to contact page
         TopNav(self.driver).nav_to_contact()
         # Use the POM class to enter text in the contact form
-        self.contactfrom.first_name("MRtest")
-        self.contactfrom.last_name("LastName")
-        self.contactfrom.email("example@example.com")
+        ContactForm(self.driver).first_name("MRtest")
+        ContactForm(self.driver).last_name("LastName")
+        ContactForm(self.driver).email("example@example.com")
 
-"""
+
 class OtherTests(unittest.TestCase):
 
     # need to add the variable to the set up for this class
@@ -226,18 +247,18 @@ class OtherTests(unittest.TestCase):
     def setUpClass(cls):
         cls.driver = webdriver.Chrome("/Users/robbie/Downloads/chromedriver")
         cls.driver.get("https://caktus:pointy@staging.caktusgroup.com/events/")
+        cls.driver.set_window_size(1920, 1080)
         cls.eventpage = EventsPage
 
     def tearDown(self):
         self.driver.quit()
 
-    def test_4(self):
+    # def test_4(self):
         # test that events match drop down selection
         # select an option from the drop down on events page
-        self.eventpage.event_dropdwon_select_year(1)
+            # self.eventpage.event_dropdwon_select_year(1)
         # verify the year in the date field
-        self.assertIn("2018", self.eventpage.date_field())
-"""
+            # self.assertIn("2018", self.eventpage.date_field())
 
 
 class A(unittest.TestCase):
@@ -247,6 +268,7 @@ class A(unittest.TestCase):
     def setUpClass(cls):
         cls.driver = webdriver.Chrome("/Users/robbie/Downloads/chromedriver")
         cls.driver.get("https://caktus:pointy@staging.caktusgroup.com")
+        cls.driver.set_window_size(1920, 1080)
         # cls.asdf = TopNav(cls.driver)
 
     @classmethod
