@@ -1,12 +1,13 @@
 import unittest
 from selenium import webdriver
 from selenium.webdriver.support.ui import Select
+from selenium.webdriver.chrome.options import Options
 
 from datetime import datetime
 from time import sleep
 
-from Page.POM import TopNav, ContactForm, Homepage, Footer, EventsPage, ServicesLandingPage, ServiceDetail
-from Page.Locators import PageTitles
+from Page.POM import TopNav, ContactForm, Homepage, Footer, EventsPage, ServicesLandingPage, ServiceDetail, BlogPage
+from Page.Locators import PageTitles, BlogLinks
 
 # should find a way to make the links work for either environment if we are really going to use this
 # headless driver
@@ -16,14 +17,21 @@ from Page.Locators import PageTitles
 # class SmokeTests(unittest.TestCase):
 # Maybe this needs to be its own file that calls tests from other places
 
+# url for the tests, putting it here so that its easier to update for all the tests at once
+url = "https://caktus:pointy@staging.caktusgroup.com"
+
+# this adds headless driver so that tests run in the background
+chrome_options = Options()
+chrome_options.add_argument("--headless")
+
 
 class HomePageTests(unittest.TestCase):
 
     @classmethod
     def setUpClass(cls):
-        cls.driver = webdriver.Chrome("/Users/robbie/Downloads/chromedriver")
+        cls.driver = webdriver.Chrome("/Users/robbie/Downloads/chromedriver", options=chrome_options)
         cls.driver.set_window_size(1920, 1080)
-        cls.driver.get("https://caktus:pointy@staging.caktusgroup.com")
+        cls.driver.get(url)
         cls.screen_name = datetime.now()
 
     @classmethod
@@ -45,6 +53,31 @@ class HomePageTests(unittest.TestCase):
         TopNav(self.driver).nav_to_homepage()
         Homepage(self.driver).click_service_card_1()
         assert self.driver.title == PageTitles.service_card_1
+
+    def test_homepage_service_card_2(self):
+        TopNav(self.driver).nav_to_homepage()
+        Homepage(self.driver).click_service_card_2()
+        assert self.driver.title == PageTitles.service_card_2
+
+    def test_homepage_service_card_3(self):
+        TopNav(self.driver).nav_to_homepage()
+        Homepage(self.driver).click_service_card_3()
+        assert self.driver.title == PageTitles.service_card_3
+
+    def test_homepage_service_card_4(self):
+        TopNav(self.driver).nav_to_homepage()
+        Homepage(self.driver).click_service_card_4()
+        assert self.driver.title == PageTitles.service_card_4
+
+    def test_homepage_service_card_5(self):
+        TopNav(self.driver).nav_to_homepage()
+        Homepage(self.driver).click_service_card_5()
+        assert self.driver.title == PageTitles.service_card_5
+
+    def test_homepage_service_card_6(self):
+        TopNav(self.driver).nav_to_homepage()
+        Homepage(self.driver).click_service_card_6()
+        assert self.driver.title == PageTitles.service_card_6
 
     def test_view_services_button(self):
         TopNav(self.driver).nav_to_homepage()
@@ -68,13 +101,13 @@ class HomePageTests(unittest.TestCase):
         assert self.driver.title == PageTitles.blog
 
 
-class BlogPage(unittest.TestCase):
+class BlogPageTests(unittest.TestCase):
 
     @classmethod
     def setUpClass(cls):
-        cls.driver = webdriver.Chrome("/Users/robbie/Downloads/chromedriver")
+        cls.driver = webdriver.Chrome("/Users/robbie/Downloads/chromedriver", options=chrome_options)
         cls.driver.set_window_size(1920, 1080)
-        cls.driver.get("https://caktus:pointy@staging.caktusgroup.com")
+        cls.driver.get(url)
         cls.screen_name = datetime.now()
 
     @classmethod
@@ -92,11 +125,11 @@ class BlogPage(unittest.TestCase):
         # Verify that clicking view more on the blog page loads 6 more posts for a total of 12
         TopNav(self.driver).nav_to_blog()
         # click view more posts and wait(sleep)
-# this needs a wait
-        self.driver.find_element_by_id("next").click()
+        # this needs a wait
+        BlogPage(self.driver).load_more()
         sleep(3)
         # count the number of cards. Finding by class name in the test is not the best practice should change this later
-        posts_count = self.driver.find_elements_by_class_name("card-common--image_container")
+        posts_count = self.driver.find_elements(*BlogLinks.blog_cards_images)
         # verify the number of posts that display
         assert (len(posts_count) == 12)
 
@@ -107,9 +140,9 @@ class FooterTests(unittest.TestCase):
 
     @classmethod
     def setUpClass(cls):
-        cls.driver = webdriver.Chrome("/Users/robbie/Downloads/chromedriver")
+        cls.driver = webdriver.Chrome("/Users/robbie/Downloads/chromedriver", options=chrome_options)
         cls.driver.set_window_size(1920, 1080)
-        cls.driver.get("https://caktus:pointy@staging.caktusgroup.com")
+        cls.driver.get(url)
         cls.screen_name = datetime.now()
 
     @classmethod
@@ -167,31 +200,40 @@ class FooterTests(unittest.TestCase):
         assert self.driver.title == PageTitles.privacy_policy
 
 
-class FooterSocial(unittest.TestCase):
+"""class FooterSocial(unittest.TestCase):
 
     def setUp(self):
-        self.driver = webdriver.Chrome("/Users/robbie/Downloads/chromedriver")
+        self.driver = webdriver.Chrome("/Users/robbie/Downloads/chromedriver", options=chrome_options)
         self.driver.set_window_size(1920, 1080)
-        self.driver.get("https://caktus:pointy@staging.caktusgroup.com")
+        self.driver.get(url)
 
     def tearDown(self):
         self.driver.quit()
 
     def test_twitter(self):
         Footer(self.driver).twitter()
-        self.driver.switch_to.window(main_window)
+        # find a way to switch tabs
+        # self.driver.switch_to.window()
         print(self.driver.current_url)
-        # need to figure out how to switch tabs
-        assert self.driver.title == "Caktus Group (@CaktusGroup) | Twitter"
+        # assert self.driver.title == "Caktus Group (@CaktusGroup) | Twitter"
+
+    def test_github(self):
+        Footer(self.driver).github()
+
+        # find a way to switch tabs
+        # self.driver.switch_to.window()
+        print(self.driver.current_url)
+        # assert self.driver.title ==
+"""
 
 
 class ServicesTests(unittest.TestCase):
 
     @classmethod
     def setUpClass(cls):
-        cls.driver = webdriver.Chrome("/Users/robbie/Downloads/chromedriver")
+        cls.driver = webdriver.Chrome("/Users/robbie/Downloads/chromedriver", options=chrome_options)
         cls.driver.set_window_size(1920, 1080)
-        cls.driver.get("https://caktus:pointy@staging.caktusgroup.com")
+        cls.driver.get(url)
         cls.screen_name = datetime.now()
 
     @classmethod
@@ -223,8 +265,8 @@ class ContactFormTest(unittest.TestCase):
     # need to add the variable to the set up for this class
     @classmethod
     def setUpClass(cls):
-        cls.driver = webdriver.Chrome("/Users/robbie/Downloads/chromedriver")
-        cls.driver.get("https://caktus:pointy@staging.caktusgroup.com")
+        cls.driver = webdriver.Chrome("/Users/robbie/Downloads/chromedriver", options=chrome_options)
+        cls.driver.get(url)
         cls.driver.set_window_size(1920, 1080)
 
     @classmethod
@@ -245,8 +287,8 @@ class OtherTests(unittest.TestCase):
     # need to add the variable to the set up for this class
     @classmethod
     def setUpClass(cls):
-        cls.driver = webdriver.Chrome("/Users/robbie/Downloads/chromedriver")
-        cls.driver.get("https://caktus:pointy@staging.caktusgroup.com/events/")
+        cls.driver = webdriver.Chrome("/Users/robbie/Downloads/chromedriver", options=chrome_options)
+        cls.driver.get(url)
         cls.driver.set_window_size(1920, 1080)
         cls.eventpage = EventsPage
 
@@ -266,8 +308,8 @@ class A(unittest.TestCase):
     # need to add the variable to the set up for this class
     @classmethod
     def setUpClass(cls):
-        cls.driver = webdriver.Chrome("/Users/robbie/Downloads/chromedriver")
-        cls.driver.get("https://caktus:pointy@staging.caktusgroup.com")
+        cls.driver = webdriver.Chrome("/Users/robbie/Downloads/chromedriver", options=chrome_options)
+        cls.driver.get(url)
         cls.driver.set_window_size(1920, 1080)
         # cls.asdf = TopNav(cls.driver)
 
@@ -275,10 +317,10 @@ class A(unittest.TestCase):
     def tearDownClass(cls):
         cls.driver.quit()
 
-    def test_1(self):
-        TopNav(self.driver).nav_to_contact()
-        TopNav(self.driver).nav_to_homepage()
-        Footer(self.driver).quick_links_contact()
+    # def test_1(self):
+        # TopNav(self.driver).nav_to_contact()
+        # TopNav(self.driver).nav_to_homepage()
+        # Footer(self.driver).quick_links_contact()
 
 
 if __name__ == '__main__':

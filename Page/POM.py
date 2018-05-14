@@ -3,7 +3,8 @@ from selenium.webdriver.common.by import By
 from selenium.webdriver.support import expected_conditions as EC
 from selenium.webdriver.support.ui import WebDriverWait
 from selenium.webdriver.support.ui import Select
-from Page.Locators import TopNavLocators, FooterLinks, HomepageLocators
+from Page.Locators import TopNavLocators, FooterLinks, HomepageLocators, BlogLinks
+
 
 # using link = ... so that its easier to come back later and add waits if I need to
 
@@ -81,6 +82,26 @@ class Homepage(Base):
         link = self.driver.find_element(*HomepageLocators.service_card_1)
         link.click()
 
+    def click_service_card_2(self):
+        link = self.driver.find_element(*HomepageLocators.service_card_2)
+        link.click()
+
+    def click_service_card_3(self):
+        link = self.driver.find_element(*HomepageLocators.service_card_3)
+        link.click()
+
+    def click_service_card_4(self):
+        link = self.driver.find_element(*HomepageLocators.service_card_4)
+        link.click()
+
+    def click_service_card_5(self):
+        link = self.driver.find_element(*HomepageLocators.service_card_5)
+        link.click()
+
+    def click_service_card_6(self):
+        link = self.driver.find_element(*HomepageLocators.service_card_6)
+        link.click()
+
     def click_view_services_button(self):
         link = self.driver.find_element(*HomepageLocators.view_services_button)
         link.click()
@@ -132,6 +153,13 @@ class ServiceDetail(Base):
         link = self.driver.find_element_by_class_name("link-common-breadcrumb")
         # wait = WebDriverWait(self.driver, 10)
         # wait.until(EC.element_to_be_clickable((By.NAME, "link-common-breadcrumb")))
+        link.click()
+
+
+class BlogPage(Base):
+
+    def load_more(self):
+        link = self.driver.find_element(*BlogLinks.load_more)
         link.click()
 
 
@@ -204,4 +232,8 @@ class Footer(Base):
 
     def twitter(self):
         link = self.driver.find_element(*FooterLinks.twittericon)
+        link.click()
+
+    def github(self):
+        link = self.driver.find_element(*FooterLinks.githubicon)
         link.click()
