@@ -3,8 +3,10 @@ from selenium.webdriver.common.by import By
 from selenium.webdriver.support import expected_conditions as EC
 from selenium.webdriver.support.ui import WebDriverWait
 from selenium.webdriver.support.ui import Select
-from Page.Locators import TopNavLocators, FooterLinks, HomepageLocators, BlogLinks
+from Page.Locators import TopNavLocators, FooterLocators, HomepageLocators, BlogLocators, ServicesLocators, \
+    EventsPageLocators
 
+# This file does all of the click, and other actions
 
 # using link = ... so that its easier to come back later and add waits if I need to
 
@@ -15,6 +17,15 @@ from Page.Locators import TopNavLocators, FooterLinks, HomepageLocators, BlogLin
     # wait = WebDriverWait(timeout, poll_frequency)
     # return wait.until(EC.element_to_be_clickable((by, elm_path)))
 
+"""
+def _wait_and_click(self, locator, timeout):
+    try:
+        wait = WebDriverWait(self.driver, timeout)
+        wait.until(EC.element_to_be_clickable((locator))).click()
+    except TimeoutException:
+        return False
+    return True
+"""
 
 class Base(object):
 
@@ -117,123 +128,131 @@ class Homepage(Base):
 
 class EventsPage(Base):
 
-    def event_dropdwon_select_year(self):
-        select = Select(self.driver.find_element_by_id("event-year"))
-        select.select_by_value("2018")
+    def event_dropdwon_select_year(self, value):
+        select = Select(self.driver.find_element(*EventsPageLocators.dropdown))
+        select.select_by_value(value)
         # self.driver.Select(self.driver.find_element_by_id("event-year")).select_by_value(value)
 
     def date_field(self):
         self.driver.find_elements_by_class_name("call-out")
 
+    def list_dates(self):
+        event_date = self.driver.find_element(*EventsPageLocators.dropdown)
+        for i in event_date:
+            print(i.text)
+
 
 class ServicesLandingPage(Base):
-
+    # need to figure out waits with the locators file
     def first_card(self):
-        link = self.driver.find_element_by_xpath("""//*[@class="card-wrapper full"]/li[1]""")
-        wait = WebDriverWait(self.driver, 10)
-        wait.until(EC.element_to_be_clickable((By.XPATH, """//*[@class="card-wrapper full"]/li[1]""")))
+        link = self.driver.find_element(*ServicesLocators.card_1)
+        # wait = WebDriverWait(self.driver, 10)
+        # wait.until(EC.element_to_be_clickable((By.XPATH, """//*[@class="card-wrapper full"]/li[1]""")))
         link.click()
 
     def second_card(self):
-        link = self.driver.find_element_by_xpath("""//*[@class="card-wrapper full"]/li[2]""")
-        wait = WebDriverWait(self.driver, 10)
-        wait.until(EC.element_to_be_clickable((By.XPATH, """//*[@class="card-wrapper full"]/li[2]""")))
+        link = self.driver.find_element(*ServicesLocators.card_2)
+        # wait = WebDriverWait(self.driver, 10)
+        # wait.until(EC.element_to_be_clickable((By.XPATH, """//*[@class="card-wrapper full"]/li[2]""")))
         link.click()
 
-    def contact_button(self):
-        link = self.driver.find_element_by_class("contact-button")
-        wait = WebDriverWait(self.driver, 10)
-        wait.until(EC.element_to_be_clickable((By.CLASS_NAME, "contact-button")))
+    def third_card(self):
+        link = self.driver.find_element(*ServicesLocators.card_3)
+        # wait = WebDriverWait(self.driver, 10)
+        # wait.until(EC.element_to_be_clickable((By.XPATH, """//*[@class="card-wrapper full"]/li[2]""")))
+        link.click()
+
+    def fourth_card(self):
+        link = self.driver.find_element(*ServicesLocators.card_4)
+        # wait = WebDriverWait(self.driver, 10)
+        # wait.until(EC.element_to_be_clickable((By.XPATH, """//*[@class="card-wrapper full"]/li[1]""")))
+        link.click()
+
+    def fifth_card(self):
+        link = self.driver.find_element(*ServicesLocators.card_5)
+        # wait = WebDriverWait(self.driver, 10)
+        # wait.until(EC.element_to_be_clickable((By.XPATH, """//*[@class="card-wrapper full"]/li[2]""")))
+        link.click()
+
+    def sixth_card(self):
+        link = self.driver.find_element(*ServicesLocators.card_6)
+        # wait = WebDriverWait(self.driver, 10)
+        # wait.until(EC.element_to_be_clickable((By.XPATH, """//*[@class="card-wrapper full"]/li[2]""")))
         link.click()
 
 
 class ServiceDetail(Base):
 
     def see_more(self):
-        link = self.driver.find_element_by_class_name("link-common-breadcrumb")
+        link = self.driver.find_element(*ServicesLocators.see_more_servicedetail_top)
         # wait = WebDriverWait(self.driver, 10)
-        # wait.until(EC.element_to_be_clickable((By.NAME, "link-common-breadcrumb")))
+        # wait.until(EC.element_to_be_clickable(self.driver.find_element(*ServicesLocators.see_more_servicedetail_top())))
+        link.click()
+
+    def contact_button(self):
+        link = self.driver.find_element(*ServicesLocators.contact_button_servicedetail)
+        # wait = WebDriverWait(self.driver, 10)
+        # wait.until(EC.element_to_be_clickable((By.CLASS_NAME, "contact-button")))
         link.click()
 
 
 class BlogPage(Base):
 
     def load_more(self):
-        link = self.driver.find_element(*BlogLinks.load_more)
+        link = self.driver.find_element(*BlogLocators.load_more)
         link.click()
 
 
 class Footer(Base):
 
     def quick_links_services(self):
-        # self.driver.find_element_by_xpath("""//*[@class="half site-map"]/ul/li[1]/a""").click()
         # getting an error on the link.click link of the following:
-        link = self.driver.find_element_by_xpath("""//*[@class="half site-map"]/ul/li[1]/a""")
-        wait = WebDriverWait(self.driver, 10)
-        wait.until(EC.element_to_be_clickable((By.XPATH, """//*[@class="half site-map"]/ul/li[1]/a""")))
+        link = self.driver.find_element(*FooterLocators.services)
+        # commenting out the wait until I can find a wait to do it without including the xpath in this file
+        # wait = WebDriverWait(self.driver, 10)
+        # wait.until(EC.element_to_be_clickable((By.XPATH, """//*[@class="half site-map"]/ul/li[1]/a""")))
         link.click()
 
     def quick_links_our_work(self):
-        # self.driver.find_element_by_xpath("""//*[@class="half site-map"]/ul/li[2]/a""").click()
-        link = self.driver.find_element_by_xpath("""//*[@class="half site-map"]/ul/li[2]/a""")
-        wait = WebDriverWait(self.driver, 10)
-        wait.until(EC.element_to_be_clickable((By.XPATH, """//*[@class="half site-map"]/ul/li[2]/a""")))
+        link = self.driver.find_element(*FooterLocators.our_work)
         link.click()
 
     def quick_links_about_us(self):
-        # self.driver.find_element_by_xpath("""//*[@class="half site-map"]/ul/li[3]/a""").click()
-        link = self.driver.find_element_by_xpath("""//*[@class="half site-map"]/ul/li[3]/a""")
-        wait = WebDriverWait(self.driver, 10)
-        wait.until(EC.element_to_be_clickable((By.XPATH, """//*[@class="half site-map"]/ul/li[3]/a""")))
+        link = self.driver.find_element(*FooterLocators.about_us)
         link.click()
 
     def quick_links_blog(self):
-        # self.driver.find_element_by_xpath("""//*[@class="half site-map"]/ul/li[4]/a""").click()
-        link = self.driver.find_element_by_xpath("""//*[@class="half site-map"]/ul/li[4]/a""")
-        wait = WebDriverWait(self.driver, 10)
-        wait.until(EC.element_to_be_clickable((By.XPATH, """//*[@class="half site-map"]/ul/li[4]/a""")))
+        link = self.driver.find_element(*FooterLocators.blog)
         link.click()
 
     def quick_links_careers(self):
-        # self.driver.find_element_by_xpath("""//*[@class="half site-map"]/ul/li[3]/a""").click()
-        link = self.driver.find_element_by_xpath("""//*[@class="half site-map"]/ul/li[5]/a""")
-        wait = WebDriverWait(self.driver, 10)
-        wait.until(EC.element_to_be_clickable((By.XPATH, """//*[@class="half site-map"]/ul/li[5]/a""")))
+        link = self.driver.find_element(*FooterLocators.careers)
         link.click()
 
     def quick_links_events(self):
-        link = self.driver.find_element_by_xpath("""//*[@class="half site-map"]/ul/li[6]/a""")
-        wait = WebDriverWait(self.driver, 10)
-        wait.until(EC.element_to_be_clickable((By.XPATH, """//*[@class="half site-map"]/ul/li[6]/a""")))
+        link = self.driver.find_element(*FooterLocators.events)
         link.click()
 
     def quick_links_talks(self):
-        link = self.driver.find_element_by_xpath("""//*[@class="half site-map"]/ul/li[7]/a""")
-        wait = WebDriverWait(self.driver, 10)
-        wait.until(EC.element_to_be_clickable((By.XPATH, """//*[@class="half site-map"]/ul/li[7]/a""")))
+        link = self.driver.find_element(*FooterLocators.talks)
         link.click()
 
     def quick_links_press(self):
-        link = self.driver.find_element_by_xpath("""//*[@class="half site-map"]/ul/li[8]/a""")
-        wait = WebDriverWait(self.driver, 10)
-        wait.until(EC.element_to_be_clickable((By.XPATH, """//*[@class="half site-map"]/ul/li[8]/a""")))
+        link = self.driver.find_element(*FooterLocators.press)
         link.click()
 
     def quick_links_contact(self):
-        # link = self.driver.find_element_by_xpath("""//*[@class="half site-map"]/ul/li[9]/a""")
-        link = self.driver.find_element(*FooterLinks.contact)
-        wait = WebDriverWait(self.driver, 10)
-        wait.until(EC.element_to_be_clickable((By.XPATH, """//*[@class="half site-map"]/ul/li[9]/a""")))
+        link = self.driver.find_element(*FooterLocators.contact)
         link.click()
 
     def privacy_policy(self):
-        link = self.driver.find_element(*FooterLinks.privacy_policy)
+        link = self.driver.find_element(*FooterLocators.privacy_policy)
         link.click()
 
     def twitter(self):
-        link = self.driver.find_element(*FooterLinks.twittericon)
+        link = self.driver.find_element(*FooterLocators.twittericon)
         link.click()
 
     def github(self):
-        link = self.driver.find_element(*FooterLinks.githubicon)
+        link = self.driver.find_element(*FooterLocators.githubicon)
         link.click()
