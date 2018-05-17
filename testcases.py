@@ -1,17 +1,15 @@
 import unittest
 from selenium import webdriver
 from selenium.webdriver.chrome.options import Options
+from selenium.webdriver.support.ui import WebDriverWait
+from selenium.webdriver.support import expected_conditions as EC
 
 from datetime import datetime
 from time import sleep
 
 from Page.POM import TopNav, ContactForm, Homepage, Footer, EventsPage, ServicesLandingPage, ServiceDetail, BlogPage
-from Page.Locators import PageTitles, BlogLocators
-
-# to do:
-    # should find a way to make the links work for either environment if we are really going to use this
-    # headless driver
-    # create a wait until clickable function
+from Page.Locators import PageTitles, BlogLocators, EventsPageLocators
+from Page.POM import ContactLocators as CL
 
 
 # url for the tests, putting it here so that its easier to update for all the tests at once
@@ -118,7 +116,6 @@ class BlogPageTests(unittest.TestCase):
         # Verify that clicking view more on the blog page loads 6 more posts for a total of 12
         TopNav(self.driver).nav_to_blog()
         # click view more posts and wait(sleep)
-        # this needs a wait
         BlogPage(self.driver).load_more()
         sleep(3)
         # count the number of cards. Finding by class name in the test is not the best practice should change this later
@@ -216,7 +213,8 @@ class FooterSocial(unittest.TestCase):
         # switch to the new tab
         tabs = self.driver.window_handles
         self.driver.switch_to.window(tabs[1])
-        assert self.driver.title == PageTitles.github
+
+        assert self.driver.current_url == PageTitles.github_url
         
     def tearDown(self):
         self.driver.quit()
@@ -293,7 +291,12 @@ class ContactFormTest(unittest.TestCase):
         # Use the POM class to enter text in the contact form
         ContactForm(self.driver).first_name("MRtest")
         ContactForm(self.driver).last_name("LastName")
-        ContactForm(self.driver).email("example@example.com")
+        ContactForm(self.driver).email("exampl@example.com")
+        ContactForm(self.driver).submit()
+
+        # element = WebDriverWait(self.driver, 10).until(lambda x: x.find_element_by_class_name("hubspot-error"))
+        element = WebDriverWait(self.driver, 10).until(lambda x: x.find_element(*CL.hubspot_error))
+        assert element.is_displayed()
 
     @classmethod
     def tearDownClass(cls):
@@ -309,39 +312,18 @@ class OtherTests(unittest.TestCase):
         cls.driver.set_window_size(1920, 1080)
 
     def test_4(self):
-        # test that events match drop down selection
+        # test that first event card matchs the year selected from the drop down
+        year = "2017"
         # select an option from the drop down on events page
         Footer(self.driver).quick_links_events()
-        EventsPage(self.driver).event_dropdwon_select_year("2018")
+        EventsPage(self.driver).event_dropdwon_select_year(year)
         # verify the year in the date field
-        event_date = EventsPage(self.driver).date_field()
-        # for i in event_date:
-            # print(i.title)
-        self.assertIn("2018", event_date)
+        event_date = self.driver.find_element(*EventsPageLocators.date_on_card).text
+        self.assertIn(year, event_date)
 
     def tearDown(self):
         self.driver.quit()
 
-"""
-class A(unittest.TestCase):
-
-    # need to add the variable to the set up for this class
-    @classmethod
-    def setUpClass(cls):
-        cls.driver = webdriver.Chrome(driver_location, options=chrome_options)
-        cls.driver.get(url)
-        cls.driver.set_window_size(1920, 1080)
-        # cls.asdf = TopNav(cls.driver)
-
-    def test_1(self):
-        TopNav(self.driver).nav_to_contact()
-        TopNav(self.driver).nav_to_homepage()
-        Footer(self.driver).quick_links_contact()
-
-    @classmethod
-    def tearDownClass(cls):
-        cls.driver.quit()
-"""
 
 if __name__ == '__main__':
     unittest.main()

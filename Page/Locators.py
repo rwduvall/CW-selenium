@@ -9,6 +9,11 @@ from selenium.webdriver.support.ui import WebDriverWait
 class TopNavLocators(object):
 
     logo = (By.CLASS_NAME, "navbar-brand")
+    blog = (By.CLASS_NAME, "posts")
+    services = (By.CLASS_NAME, "service-page")
+    our_work = (By.CLASS_NAME, "our-work")
+    about_us = (By.CLASS_NAME, "about-us")
+    contact = (By.CLASS_NAME, "contact")
 
 
 class FooterLocators(object):
@@ -34,6 +39,7 @@ class BlogLocators(object):
 
 
 class HomepageLocators(object):
+    hero_button = (By.CLASS_NAME, "button")
     # success model link in the why caktus seciton
     success_model = (By.LINK_TEXT, "Success Model")
     # the What Can We Do For You? section
@@ -45,6 +51,7 @@ class HomepageLocators(object):
     service_card_6 = (By.XPATH, """//*[@class="card-wrapper full"]/li[%s]/a""" % 6)
     view_services_button = (By.XPATH, """//*[@id="our-services"]/div/div/a""")
     # casestudies section
+    featured_case_study = (By.CLASS_NAME, "card-case-study")
     read_our_case_studies_button = (By.XPATH, """//*[@id="case-studies-showcase"]/div/div[2]/a""")
     # rescources section
     blog_card_title = (By.XPATH, """//*[@id="our-resources"]/div/ul/li[1]/h3/a""")
@@ -62,9 +69,23 @@ class ServicesLocators(object):
     see_more_servicedetail_top = (By.XPATH, """//*[@class="components-wrapper wrapper"]/a[1]""")
 
 
+class ContactLocators(object):
+
+    first_name = (By.NAME, "firstname")
+    last_name = (By.NAME, "lastname")
+    email = (By.NAME, "email")
+    phone_number = (By.NAME, "phone")
+    company_name = (By.NAME, "company")
+    message = (By.NAME, "message")
+
+    hubspot_error = (By.CLASS_NAME, "hubspot-error")
+    send_button = (By.XPATH, """//*[@class="actions"]/input""")
+
+
 class EventsPageLocators(object):
 
     dropdown = (By.ID, "event-year")
+    date_on_card = (By.CLASS_NAME, "call-out")
 
 
 class PageTitles(object):
@@ -81,7 +102,7 @@ class PageTitles(object):
     talks = "Web Development Talks | Caktus Group"
     press = "Awards and Press | Caktus Group"
     # service cards:
-    service_card_1 = "Custom Web App Development | Caktus Group | Caktus Group"
+    service_card_1 = "Custom Web App Development | Caktus Group"
     service_card_2 = "Discovery Workshops and Product Definition | Caktus Group"
     service_card_3 = "Team Augmentation | Developer Staffing | Caktus Group"
     service_card_4 = "Project Management, QA, Agile Consulting | Caktus Group"
@@ -94,5 +115,6 @@ class PageTitles(object):
     featured_casestudy = "Live Event Management App | Caktus Group"
 
     twitter = "Caktus Group (@CaktusGroup) | Twitter"
-    github = "Caktus Consulting Group, LLC"
+    # using URL for this instead of title b/c title wasn't working
+    github_url = "https://github.com/caktus"
 
