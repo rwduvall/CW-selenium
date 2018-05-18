@@ -2,19 +2,19 @@ import unittest
 from selenium import webdriver
 from selenium.webdriver.chrome.options import Options
 from selenium.webdriver.support.ui import WebDriverWait
-from selenium.webdriver.support import expected_conditions as EC
-
 from datetime import datetime
 from time import sleep
+
+# from ddt import ddt, data
 
 from Page.POM import TopNav, ContactForm, Homepage, Footer, EventsPage, ServicesLandingPage, ServiceDetail, BlogPage
 from Page.Locators import PageTitles, BlogLocators, EventsPageLocators
 from Page.POM import ContactLocators as CL
 
-
 # url for the tests, putting it here so that its easier to update for all the tests at once
 url = "https://caktus:pointy@staging.caktusgroup.com"
 driver_location = "/Users/robbie/Downloads/chromedriver"
+
 # this adds headless driver so that tests run in the background
 chrome_options = Options()
 chrome_options.add_argument("--headless")
@@ -27,7 +27,6 @@ class HomePageTests(unittest.TestCase):
         cls.driver = webdriver.Chrome(driver_location, options=chrome_options)
         cls.driver.set_window_size(1920, 1080)
         cls.driver.get(url)
-        cls.screen_name = datetime.now()
 
     def test_hero_button_loads_services_page(self):
         # Verify that the button in the hero image loads the services page
@@ -40,6 +39,7 @@ class HomePageTests(unittest.TestCase):
         Homepage(self.driver).click_why_caktus_success_model()
         assert self.driver.title == PageTitles.success_model_blog
 
+    # These tests verify that the service cards load the correct pages
     def test_homepage_service_card_1(self):
         TopNav(self.driver).nav_to_homepage()
         Homepage(self.driver).click_service_card_1()
@@ -71,25 +71,34 @@ class HomePageTests(unittest.TestCase):
         assert self.driver.title == PageTitles.service_card_6
 
     def test_view_services_button(self):
+        # Verify that the services button takes the user to the services page
         TopNav(self.driver).nav_to_homepage()
         Homepage(self.driver).click_view_services_button()
         assert self.driver.title == PageTitles.services
 
     def test_casestudies_cards_navigation(self):
-        TopNav(self.driver).nav_to_homepage()
         # Verify the featured case study on the homepage takes the user to the correct page
+        TopNav(self.driver).nav_to_homepage()
         Homepage(self.driver).click_featured_case_study()
         assert self.driver.title == PageTitles.featured_casestudy
 
     def test_read_our_case_studies_button(self):
+        # Verify that the read our case studies button takes user to correct page
         TopNav(self.driver).nav_to_homepage()
         Homepage(self.driver).click_read_our_case_studies()
         assert self.driver.title == PageTitles.casestudies
 
     def test_resource_blog_card_title(self):
+        # Verify that the blog link in resource card takes user to blog page
         TopNav(self.driver).nav_to_homepage()
         Homepage(self.driver).click_resources_blog_card_title()
         assert self.driver.title == PageTitles.blog
+
+    def test_resource_tech_talks_card_title(self):
+        # Verify that the blog link in resource card takes user to blog page
+        TopNav(self.driver).nav_to_homepage()
+        Homepage(self.driver).click_resources_tech_talks_card_title()
+        assert self.driver.title == PageTitles.talks
 
     @classmethod
     def tearDownClass(cls):
@@ -103,14 +112,12 @@ class BlogPageTests(unittest.TestCase):
         cls.driver = webdriver.Chrome(driver_location, options=chrome_options)
         cls.driver.set_window_size(1920, 1080)
         cls.driver.get(url)
-        cls.screen_name = datetime.now()
 
-    def test_verify_blog_page_title(self):
+    def test_blog_page_title(self):
         # Navigates to the blog with the top navigation and verifies the title includes the word Blog
         TopNav(self.driver).nav_to_blog()
         # verify that Blog is in the title of the blog page
         assert self.driver.title == PageTitles.blog
-        # self.assertIn("Blog", self.driver.title)
 
     def test_count_blog_cards(self):
         # Verify that clicking view more on the blog page loads 6 more posts for a total of 12
@@ -118,12 +125,10 @@ class BlogPageTests(unittest.TestCase):
         # click view more posts and wait(sleep)
         BlogPage(self.driver).load_more()
         sleep(3)
-        # count the number of cards. Finding by class name in the test is not the best practice should change this later
+        # count the number of cards
         posts_count = self.driver.find_elements(*BlogLocators.blog_cards_images)
         # verify the number of posts that display
         assert (len(posts_count) == 12)
-
-    # add tests for resources cards
 
     @classmethod
     def tearDownClass(cls):
@@ -137,15 +142,13 @@ class FooterTests(unittest.TestCase):
         cls.driver = webdriver.Chrome(driver_location, options=chrome_options)
         cls.driver.set_window_size(1920, 1080)
         cls.driver.get(url)
-        cls.screen_name = datetime.now()
 
-    # Quick links
-    def test_footer_services(self):
+    def test_quick_links_services(self):
         # Verify that services link in footer loads correct page
         Footer(self.driver).quick_links_services()
         assert self.driver.title == PageTitles.services
 
-    def test_footer_our_work(self):
+    def test_quick_links_our_work(self):
         # Verify that our work link in footer loads correct page
         Footer(self.driver).quick_links_our_work()
         assert self.driver.title == PageTitles.casestudies
@@ -160,27 +163,27 @@ class FooterTests(unittest.TestCase):
         Footer(self.driver).quick_links_blog()
         assert self.driver.title == PageTitles.blog
 
-    def test_footer_careers(self):
+    def test_quick_links_careers(self):
         # Verify that careers link in footer loads correct page
         Footer(self.driver).quick_links_careers()
         assert self.driver.title == PageTitles.careers
 
-    def test_footer_events(self):
+    def test_quick_links_events(self):
         # Verify that events link in footer loads correct page
         Footer(self.driver).quick_links_events()
         assert self.driver.title == PageTitles.events
 
-    def test_footer_talks(self):
+    def test_quick_links_talks(self):
         # Verify that talks link in footer loads correct page
         Footer(self.driver).quick_links_talks()
         assert self.driver.title == PageTitles.talks
 
-    def test_footer_press(self):
+    def test_quick_links_press(self):
         # Verify that press link in footer loads correct page
         Footer(self.driver).quick_links_press()
         assert self.driver.title == PageTitles.press
 
-    def test_footer_contact(self):
+    def test_quick_links_contact(self):
         # Verify that press link in footer loads correct page
         Footer(self.driver).quick_links_contact()
         assert self.driver.title == PageTitles.contact
@@ -202,20 +205,40 @@ class FooterSocial(unittest.TestCase):
         self.driver.get(url)
 
     def test_twitter(self):
+        # Verify that the twitter icon in the footer opens the correct page
         Footer(self.driver).twitter()
-        # switch to the new tab
-        tabs = self.driver.window_handles
-        self.driver.switch_to.window(tabs[1])
+        # switch to the new tab by finding the second window handle
+        Footer(self.driver).switch_new_tab()
         assert self.driver.title == PageTitles.twitter
 
     def test_github(self):
+        # Verify that the github icon in the footer opens the correct page
         Footer(self.driver).github()
-        # switch to the new tab
-        tabs = self.driver.window_handles
-        self.driver.switch_to.window(tabs[1])
-
+        # switch to the new tab by finding the second window handle
+        Footer(self.driver).switch_new_tab()
         assert self.driver.current_url == PageTitles.github_url
-        
+
+    def test_facebook(self):
+        # Verify that the facebook icon in the footer opens the correct page
+        Footer(self.driver).facebook()
+        # switch to the new tab by finding the second window handle
+        Footer(self.driver).switch_new_tab()
+        assert self.driver.current_url == PageTitles.facebook_url
+
+    def test_google_plus(self):
+        # Verify that the google+ icon in the footer opens the correct page
+        Footer(self.driver).google_plus()
+        # switch to the new tab by finding the second window handle
+        Footer(self.driver).switch_new_tab()
+        assert self.driver.current_url == PageTitles.google_plus_url
+
+    def test_linkiedIn(self):
+        # Verify that the google+ icon in the footer opens the correct page
+        Footer(self.driver).linkedIn()
+        # switch to the new tab by finding the second window handle
+        Footer(self.driver).switch_new_tab()
+        assert self.driver.current_url == PageTitles.linkedIn_url
+
     def tearDown(self):
         self.driver.quit()
 
@@ -227,7 +250,6 @@ class ServicesTests(unittest.TestCase):
         cls.driver = webdriver.Chrome(driver_location, options=chrome_options)
         cls.driver.set_window_size(1920, 1080)
         cls.driver.get(url)
-        cls.screen_name = datetime.now()
 
     def test_services_first_card(self):
         TopNav(self.driver).nav_to_services()
@@ -293,8 +315,7 @@ class ContactFormTest(unittest.TestCase):
         ContactForm(self.driver).last_name("LastName")
         ContactForm(self.driver).email("exampl@example.com")
         ContactForm(self.driver).submit()
-
-        # element = WebDriverWait(self.driver, 10).until(lambda x: x.find_element_by_class_name("hubspot-error"))
+        # verify that an error is displayed for the required field that was not entered
         element = WebDriverWait(self.driver, 10).until(lambda x: x.find_element(*CL.hubspot_error))
         assert element.is_displayed()
 
@@ -303,7 +324,8 @@ class ContactFormTest(unittest.TestCase):
         cls.driver.quit()
 
 
-class OtherTests(unittest.TestCase):
+# @ddt
+class EventsTests(unittest.TestCase):
 
     @classmethod
     def setUpClass(cls):
@@ -311,8 +333,10 @@ class OtherTests(unittest.TestCase):
         cls.driver.get(url)
         cls.driver.set_window_size(1920, 1080)
 
-    def test_4(self):
-        # test that first event card matchs the year selected from the drop down
+    # uncomment out ddt/data lines, comment out/remove the year= line and add a perameter 'year' after self to use ddt
+    # @data("2018", "2017", "2016", "2015", "2014", "2013", "2012")
+    def test_events_dropdown(self):
+        # Verify that first event card matches the year selected from the drop down
         year = "2017"
         # select an option from the drop down on events page
         Footer(self.driver).quick_links_events()

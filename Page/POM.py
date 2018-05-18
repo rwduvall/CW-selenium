@@ -6,12 +6,7 @@ from selenium.webdriver.support.ui import Select
 from Page.Locators import TopNavLocators, FooterLocators, HomepageLocators, BlogLocators, ServicesLocators, \
     EventsPageLocators, ContactLocators
 
-# This file does all of the click, and other actions
-
-# using link = ... so that its easier to come back later and add waits if I need to
-
-# using for wait: WebDriverWait(self.driver, 10).until(lambda x: x.find_element('locator'))
-# https://github.com/levi-rs/explicit/blob/master/explicit/waiter.py
+# This file does all of the click and other actions
 
 
 class Base(object):
@@ -126,6 +121,11 @@ class Homepage(Base):
         WebDriverWait(self.driver, 10).until(lambda x: x.find_element(*HomepageLocators.blog_card_title))
         link.click()
 
+    def click_resources_tech_talks_card_title(self):
+        link = self.driver.find_element(*HomepageLocators.tech_talks_card_title)
+        WebDriverWait(self.driver, 10).until(lambda x: x.find_element(*HomepageLocators.tech_talks_card_title))
+        link.click()
+
 
 class EventsPage(Base):
 
@@ -137,11 +137,6 @@ class EventsPage(Base):
     def date_field(self):
         self.driver.find_elements(*EventsPageLocators.date_on_card)
 
-    def list_dates(self):
-        event_date = self.driver.find_element(*EventsPageLocators.dropdown)
-        for i in event_date:
-            print(i.text)
-
 
 class ServicesLandingPage(Base):
     # need to figure out waits with the locators file
@@ -151,7 +146,6 @@ class ServicesLandingPage(Base):
 
     def second_card(self):
         link = self.driver.find_element(*ServicesLocators.card_2)
-
         link.click()
 
     def third_card(self):
@@ -235,9 +229,26 @@ class Footer(Base):
         link.click()
 
     def twitter(self):
-        link = self.driver.find_element(*FooterLocators.twittericon)
+        link = self.driver.find_element(*FooterLocators.twitter_icon)
         link.click()
 
     def github(self):
-        link = self.driver.find_element(*FooterLocators.githubicon)
+        link = self.driver.find_element(*FooterLocators.github_icon)
         link.click()
+
+    def facebook(self):
+        link = self.driver.find_element(*FooterLocators.facebook_icon)
+        link.click()
+
+    def google_plus(self):
+        link = self.driver.find_element(*FooterLocators.google_plus_icon)
+        link.click()
+
+    def linkedIn(self):
+        link = self.driver.find_element(*FooterLocators.linkedIn)
+        link.click()
+
+    def switch_new_tab(self):
+        # this probably doesn't belong here
+        tabs = self.driver.window_handles
+        self.driver.switch_to.window(tabs[1])
