@@ -28,9 +28,11 @@ class FooterLocators(object):
     press = (By.XPATH, """//*[@class="half site-map"]/ul/li[%s]/a""" % 8)
     contact = (By.XPATH, """//*[@class="half site-map"]/ul/li[%s]/a""" % 9)
     privacy_policy = (By.XPATH, """//*[@class="half newsletter-sign-up"]/p/a""")
-    twittericon = (By.XPATH, """//*[@class="socialicons"]/ul/li[%s]/a""" % 1)
-    githubicon = (By.XPATH, """//*[@class="socialicons"]/ul/li[%s]/a""" % 2)
-
+    twitter_icon = (By.XPATH, """//*[@class="socialicons"]/ul/li[%s]/a""" % 1)
+    github_icon = (By.XPATH, """//*[@class="socialicons"]/ul/li[%s]/a""" % 2)
+    facebook_icon = (By.XPATH, """//*[@class="socialicons"]/ul/li[%s]/a""" % 3)
+    google_plus_icon = (By.XPATH, """//*[@class="socialicons"]/ul/li[%s]/a""" % 4)
+    linkedIn = (By.XPATH, """//*[@class="socialicons"]/ul/li[%s]/a""" % 5)
 
 class BlogLocators(object):
 
@@ -55,6 +57,8 @@ class HomepageLocators(object):
     read_our_case_studies_button = (By.XPATH, """//*[@id="case-studies-showcase"]/div/div[2]/a""")
     # rescources section
     blog_card_title = (By.XPATH, """//*[@id="our-resources"]/div/ul/li[1]/h3/a""")
+    tech_talks_card_title = (By.XPATH, """//*[@id="our-resources"]/div/ul/li[3]/h3/a""")
+
 
 
 class ServicesLocators(object):
@@ -111,9 +115,12 @@ class PageTitles(object):
     # All the other pages
     success_model_blog = "The Caktus Success Model | Caktus Group"
     privacy_policy = "Privacy Policy | Caktus Group"
-
     featured_casestudy = "Live Event Management App | Caktus Group"
 
+    #
     twitter = "Caktus Group (@CaktusGroup) | Twitter"
     # using URL for this instead of title b/c title wasn't working
     github_url = "https://github.com/caktus"
+    facebook_url = "https://www.facebook.com/CaktusGroup"
+    google_plus_url = "https://plus.google.com/105062754987823868923"
+    linkedIn_url = "https://www.linkedin.com/company/caktus-consulting-group-llc"
