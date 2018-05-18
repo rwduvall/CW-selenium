@@ -118,3 +118,4 @@ class PageTitles(object):
     # using URL for this instead of title b/c title wasn't working
     github_url = "https://github.com/caktus"
 
+test
