@@ -241,5 +241,3 @@ class Footer(Base):
     def github(self):
         link = self.driver.find_element(*FooterLocators.githubicon)
         link.click()
-
-test

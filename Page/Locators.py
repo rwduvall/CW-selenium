@@ -117,5 +117,3 @@ class PageTitles(object):
     twitter = "Caktus Group (@CaktusGroup) | Twitter"
     # using URL for this instead of title b/c title wasn't working
     github_url = "https://github.com/caktus"
-
-test
