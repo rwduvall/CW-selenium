@@ -248,6 +248,9 @@ class Footer(Base):
         link = self.driver.find_element(*FooterLocators.linkedIn)
         link.click()
 
+
+class TestUtils(Base):
+
     def switch_new_tab(self):
         # this probably doesn't belong here
         tabs = self.driver.window_handles

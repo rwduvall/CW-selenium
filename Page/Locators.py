@@ -124,3 +124,4 @@ class PageTitles(object):
     facebook_url = "https://www.facebook.com/CaktusGroup"
     google_plus_url = "https://plus.google.com/105062754987823868923"
     linkedIn_url = "https://www.linkedin.com/company/caktus-consulting-group-llc"
+    linkedIn_title = "LinkedIn: Log In or Sign Up"

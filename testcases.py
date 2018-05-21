@@ -6,8 +6,10 @@ from datetime import datetime
 from time import sleep
 
 # from ddt import ddt, data
+import pytest
 
-from Page.POM import TopNav, ContactForm, Homepage, Footer, EventsPage, ServicesLandingPage, ServiceDetail, BlogPage
+from Page.POM import TopNav, ContactForm, Homepage, Footer, EventsPage, ServicesLandingPage, ServiceDetail, BlogPage,\
+    TestUtils
 from Page.Locators import PageTitles, BlogLocators, EventsPageLocators
 from Page.POM import ContactLocators as CL
 
@@ -199,6 +201,7 @@ class FooterTests(unittest.TestCase):
 
 class FooterSocial(unittest.TestCase):
 
+    # not using setUpClass here because that would make switching tabs harder
     def setUp(self):
         self.driver = webdriver.Chrome(driver_location, options=chrome_options)
         self.driver.set_window_size(1920, 1080)
@@ -208,36 +211,36 @@ class FooterSocial(unittest.TestCase):
         # Verify that the twitter icon in the footer opens the correct page
         Footer(self.driver).twitter()
         # switch to the new tab by finding the second window handle
-        Footer(self.driver).switch_new_tab()
+        TestUtils(self.driver).switch_new_tab()
         assert self.driver.title == PageTitles.twitter
 
     def test_github(self):
         # Verify that the github icon in the footer opens the correct page
         Footer(self.driver).github()
         # switch to the new tab by finding the second window handle
-        Footer(self.driver).switch_new_tab()
+        TestUtils(self.driver).switch_new_tab()
         assert self.driver.current_url == PageTitles.github_url
 
     def test_facebook(self):
         # Verify that the facebook icon in the footer opens the correct page
         Footer(self.driver).facebook()
         # switch to the new tab by finding the second window handle
-        Footer(self.driver).switch_new_tab()
+        TestUtils(self.driver).switch_new_tab()
         assert self.driver.current_url == PageTitles.facebook_url
 
     def test_google_plus(self):
         # Verify that the google+ icon in the footer opens the correct page
         Footer(self.driver).google_plus()
         # switch to the new tab by finding the second window handle
-        Footer(self.driver).switch_new_tab()
+        TestUtils(self.driver).switch_new_tab()
         assert self.driver.current_url == PageTitles.google_plus_url
 
     def test_linkiedIn(self):
         # Verify that the google+ icon in the footer opens the correct page
         Footer(self.driver).linkedIn()
         # switch to the new tab by finding the second window handle
-        Footer(self.driver).switch_new_tab()
-        assert self.driver.current_url == PageTitles.linkedIn_url
+        TestUtils(self.driver).switch_new_tab()
+        assert self.driver.title == PageTitles.linkedIn_title
 
     def tearDown(self):
         self.driver.quit()
@@ -333,17 +336,18 @@ class EventsTests(unittest.TestCase):
         cls.driver.get(url)
         cls.driver.set_window_size(1920, 1080)
 
-    # uncomment out ddt/data lines, comment out/remove the year= line and add a perameter 'year' after self to use ddt
-    # @data("2018", "2017", "2016", "2015", "2014", "2013", "2012")
     def test_events_dropdown(self):
-        # Verify that first event card matches the year selected from the drop down
+        # Verify that first event card matches the 'year' selected from the drop down
         year = "2017"
         # select an option from the drop down on events page
         Footer(self.driver).quick_links_events()
         EventsPage(self.driver).event_dropdwon_select_year(year)
         # verify the year in the date field
         event_date = self.driver.find_element(*EventsPageLocators.date_on_card).text
+        # self.assertIn(year, event_date)
         self.assertIn(year, event_date)
+    # uncomment out ddt/data lines, comment out/remove the year= line and add a perameter 'year' after self to use ddt
+    # @data("2018", "2017", "2016", "2015", "2014", "2013", "2012")
 
     def tearDown(self):
         self.driver.quit()
