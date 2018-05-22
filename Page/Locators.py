@@ -140,8 +140,9 @@ class PageTitles(object):
     success_model_blog = "The Caktus Success Model | Caktus Group"
     privacy_policy = "Privacy Policy | Caktus Group"
     featured_casestudy = "Live Event Management App | Caktus Group"
+    colin = "Colin Copeland | Caktus Group"
 
-    #
+    # social media pages
     twitter = "Caktus Group (@CaktusGroup) | Twitter"
     # using URL for this instead of title b/c title wasn't working
     github_url = "https://github.com/caktus"
@@ -157,4 +158,4 @@ class PageTitles(object):
     pyladies = "PyLadies – Women Who Love Coding in Python"
     trianlgepython_url = "http://tripython.org/"
     django_girls = "Django Girls - start your journey with programming"
-    colin = "Colin Copeland | Caktus Group"
+
