@@ -9,10 +9,11 @@ from selenium.webdriver.support.ui import WebDriverWait
 class TopNavLocators(object):
 
     logo = (By.CLASS_NAME, "navbar-brand")
-    blog = (By.CLASS_NAME, "posts")
     services = (By.CLASS_NAME, "service-page")
     our_work = (By.CLASS_NAME, "our-work")
     about_us = (By.CLASS_NAME, "about-us")
+    careers = (By.CLASS_NAME, "careers")
+    blog = (By.CLASS_NAME, "posts")
     contact = (By.CLASS_NAME, "contact")
 
 
@@ -33,11 +34,6 @@ class FooterLocators(object):
     facebook_icon = (By.XPATH, """//*[@class="socialicons"]/ul/li[%s]/a""" % 3)
     google_plus_icon = (By.XPATH, """//*[@class="socialicons"]/ul/li[%s]/a""" % 4)
     linkedIn = (By.XPATH, """//*[@class="socialicons"]/ul/li[%s]/a""" % 5)
-
-class BlogLocators(object):
-
-    load_more = (By.XPATH, """//*[@id="next"]""")
-    blog_cards_images = (By.CLASS_NAME, "card-common--image_container")
 
 
 class HomepageLocators(object):
@@ -60,7 +56,6 @@ class HomepageLocators(object):
     tech_talks_card_title = (By.XPATH, """//*[@id="our-resources"]/div/ul/li[3]/h3/a""")
 
 
-
 class ServicesLocators(object):
 
     card_1 = (By.XPATH, """//*[@class="card-wrapper full"]/li[1]""")
@@ -71,6 +66,35 @@ class ServicesLocators(object):
     card_6 = (By.XPATH, """//*[@class="card-wrapper full"]/li[6]""")
     contact_button_servicedetail = (By.XPATH, """//*[@id="main-content"]/section[3]/a""")  # class="contact-button"
     see_more_servicedetail_top = (By.XPATH, """//*[@class="components-wrapper wrapper"]/a[1]""")
+
+
+class OurWorkLocators(object):
+
+    card_1 = ()
+
+
+class AboutUsLocators(object):
+
+    # tech commnunity links:
+    meet_team_button = (By.ID, "scroll-to-team")
+    browse_our_contributions = (By.XPATH, """//*[@id="open-source-leadership"]/div/div/a""")
+    women_in_tech = (By.LINK_TEXT, "Durham Women in Tech")
+    code_for_durham = (By.LINK_TEXT, "Code for Durham")
+    girl_dev_it_rdu = (By.LINK_TEXT, "Girl Develop-it RDU")
+    pyladies = (By.LINK_TEXT, "PyLadies")
+    trianglepython = (By.LINK_TEXT, "TrianglePython")
+    django_girls = (By.LINK_TEXT, "Django Girls")
+    # all the rest:
+    view_more_press = (By.XPATH, """//*[@id="our-blog"]/div/div[3]/a""")
+    colin = (By.LINK_TEXT, "Colin Copeland")
+    were_hiring = (By.LINK_TEXT, "We're hiring!")
+
+
+class BlogLocators(object):
+
+    load_more = (By.XPATH, """//*[@id="next"]""")
+    blog_cards_images = (By.CLASS_NAME, "card-common--image_container")
+    view_more_events = (By.XPATH, """//*[@class="home-page"]/div[2]/a""")
 
 
 class ContactLocators(object):
@@ -116,8 +140,9 @@ class PageTitles(object):
     success_model_blog = "The Caktus Success Model | Caktus Group"
     privacy_policy = "Privacy Policy | Caktus Group"
     featured_casestudy = "Live Event Management App | Caktus Group"
+    colin = "Colin Copeland | Caktus Group"
 
-    #
+    # social media pages
     twitter = "Caktus Group (@CaktusGroup) | Twitter"
     # using URL for this instead of title b/c title wasn't working
     github_url = "https://github.com/caktus"
@@ -125,3 +150,12 @@ class PageTitles(object):
     google_plus_url = "https://plus.google.com/105062754987823868923"
     linkedIn_url = "https://www.linkedin.com/company/caktus-consulting-group-llc"
     linkedIn_title = "LinkedIn: Log In or Sign Up"
+
+    # About us tech community link titles
+    durham_women_in_tech = "Durham Women in Tech (Durham, NC) | Meetup"
+    code_for_durham = "Code for Durham"
+    girl_dev_it = "Raleigh / Durham - Girl Develop It"
+    pyladies = "PyLadies – Women Who Love Coding in Python"
+    trianlgepython_url = "http://tripython.org/"
+    django_girls = "Django Girls - start your journey with programming"
+

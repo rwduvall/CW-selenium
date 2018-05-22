@@ -9,7 +9,7 @@ from time import sleep
 import pytest
 
 from Page.POM import TopNav, ContactForm, Homepage, Footer, EventsPage, ServicesLandingPage, ServiceDetail, BlogPage,\
-    TestUtils
+    TestUtils, AboutUs
 from Page.Locators import PageTitles, BlogLocators, EventsPageLocators
 from Page.POM import ContactLocators as CL
 
@@ -107,6 +107,195 @@ class HomePageTests(unittest.TestCase):
         cls.driver.quit()
 
 
+class ServicesTests(unittest.TestCase):
+
+    @classmethod
+    def setUpClass(cls):
+        cls.driver = webdriver.Chrome(driver_location, options=chrome_options)
+        cls.driver.set_window_size(1920, 1080)
+        cls.driver.get(url)
+
+    def test_services_first_card(self):
+        TopNav(self.driver).nav_to_services()
+        ServicesLandingPage(self.driver).first_card()
+        assert self.driver.title == PageTitles.service_card_1
+
+    def test_services_second_card(self):
+        TopNav(self.driver).nav_to_services()
+        ServicesLandingPage(self.driver).second_card()
+        assert self.driver.title == PageTitles.service_card_2
+
+    def test_services_third_card(self):
+        TopNav(self.driver).nav_to_services()
+        ServicesLandingPage(self.driver).third_card()
+        assert self.driver.title == PageTitles.service_card_3
+
+    def test_services_fourth_card(self):
+        TopNav(self.driver).nav_to_services()
+        ServicesLandingPage(self.driver).fourth_card()
+        assert self.driver.title == PageTitles.service_card_4
+
+    def test_services_fifth_card(self):
+        TopNav(self.driver).nav_to_services()
+        ServicesLandingPage(self.driver).fifth_card()
+        assert self.driver.title == PageTitles.service_card_5
+
+    def test_services_sixth_card(self):
+        TopNav(self.driver).nav_to_services()
+        ServicesLandingPage(self.driver).sixth_card()
+        assert self.driver.title == PageTitles.service_card_6
+
+    def test_servicedetail_see_more(self):
+        # Verify the see more breadcrumb on service detail page opens services page
+        TopNav(self.driver).nav_to_services()
+        ServicesLandingPage(self.driver).first_card()
+        ServiceDetail(self.driver).see_more()
+        assert self.driver.title == PageTitles.services
+
+    def test_servicedetail_contact_button(self):
+        # Verify that the contact button on services page opens the contact page
+        TopNav(self.driver).nav_to_services()
+        ServicesLandingPage(self.driver).first_card()
+        ServiceDetail(self.driver).contact_button()
+        assert self.driver.title == PageTitles.contact
+
+    @classmethod
+    def tearDownClass(cls):
+        cls.driver.quit()
+
+
+class CasestudiesTests(unittest.TestCase):
+
+    @classmethod
+    def setUpClass(cls):
+        cls.driver = webdriver.Chrome(driver_location, options=chrome_options)
+        cls.driver.set_window_size(1920, 1080)
+        cls.driver.get(url)
+
+    def test_(self):
+        # Verify that the Our Work option in the top nav loads the /casestudies page
+        TopNav(self.driver).nav_to_ourwork()
+        assert self.driver.title == PageTitles.casestudies
+
+    # Add tests for the cards once we implement the reusable card component
+
+    @classmethod
+    def tearDownClass(cls):
+        cls.driver.quit()
+
+
+class AboutUsTests(unittest.TestCase):
+
+    def setUp(self):
+        self.driver = webdriver.Chrome(driver_location, options=chrome_options)
+        self.driver.get(url)
+        self.driver.set_window_size(1920, 1080)
+
+    # tech community engagement links
+    def test_our_contributions_button(self):
+        TopNav(self.driver).nav_to_aboutus()
+        AboutUs(self.driver).browse_contributions_button()
+        TestUtils(self.driver).switch_new_tab()
+        assert self.driver.current_url == PageTitles.github_url
+
+    def test_women_in_tech_link(self):
+        TopNav(self.driver).nav_to_aboutus()
+        AboutUs(self.driver).women_in_tech_click()
+        TestUtils(self.driver).switch_new_tab()
+        assert self.driver.title == PageTitles.durham_women_in_tech
+
+    def test_code_durham_link(self):
+        TopNav(self.driver).nav_to_aboutus()
+        AboutUs(self.driver).code_durham_click()
+        TestUtils(self.driver).switch_new_tab()
+        assert self.driver.title == PageTitles.code_for_durham
+
+    def test_girl_dev_it_link(self):
+        TopNav(self.driver).nav_to_aboutus()
+        AboutUs(self.driver).girl_dev_it_click()
+        TestUtils(self.driver).switch_new_tab()
+        assert self.driver.title == PageTitles.girl_dev_it
+
+    def test_pyladies_link(self):
+        TopNav(self.driver).nav_to_aboutus()
+        AboutUs(self.driver).pyladies_click()
+        TestUtils(self.driver).switch_new_tab()
+        assert self.driver.title == PageTitles.pyladies
+
+    def test_trianglepython_link(self):
+        TopNav(self.driver).nav_to_aboutus()
+        AboutUs(self.driver).trianglepython_click()
+        TestUtils(self.driver).switch_new_tab()
+        print(self.driver.current_url)
+        assert self.driver.current_url == PageTitles.trianlgepython_url
+
+    def test_django_girls_link(self):
+        TopNav(self.driver).nav_to_aboutus()
+        AboutUs(self.driver).django_girls_click()
+        TestUtils(self.driver).switch_new_tab()
+        assert self.driver.title == PageTitles.django_girls
+
+    def test_veiw_more_press(self):
+        TopNav(self.driver).nav_to_aboutus()
+        AboutUs(self.driver).view_more_press_button()
+        assert self.driver.title == PageTitles.press
+
+    def test_team_bio_link(self):
+        TopNav(self.driver).nav_to_aboutus()
+        AboutUs(self.driver).colin_bio()
+        assert self.driver.title == PageTitles.colin
+
+    def test_were_hiring_button(self):
+        TopNav(self.driver).nav_to_aboutus()
+        AboutUs(self.driver).were_hiring_button()
+        assert self.driver.title == PageTitles.careers
+
+    def tearDown(self):
+        self.driver.quit()
+
+
+class CareersTests(unittest.TestCase):
+
+    @classmethod
+    def setUpClass(cls):
+        cls.driver = webdriver.Chrome(driver_location, options=chrome_options)
+        cls.driver.get(url)
+        cls.driver.set_window_size(1920, 1080)
+
+    def test(self):
+        TopNav(self.driver).nav_to_careers()
+        assert self.driver.title == PageTitles.careers
+
+    @classmethod
+    def tearDownClass(cls):
+        cls.driver.quit()
+
+
+class ContactFormTest(unittest.TestCase):
+
+    @classmethod
+    def setUpClass(cls):
+        cls.driver = webdriver.Chrome(driver_location, options=chrome_options)
+        cls.driver.get(url)
+        cls.driver.set_window_size(1920, 1080)
+
+    def test_contact_form(self):
+        # Use the POM class to navigate to contact page
+        TopNav(self.driver).nav_to_contact()
+        # Use the POM class to enter text in the contact form
+        ContactForm(self.driver).first_name("MRtest")
+        ContactForm(self.driver).last_name("LastName")
+        ContactForm(self.driver).email("exampl@example.com")
+        ContactForm(self.driver).submit()
+        # verify that an error is displayed for the required field that was not entered
+        element = WebDriverWait(self.driver, 10).until(lambda x: x.find_element(*CL.hubspot_error))
+        assert element.is_displayed()
+
+    @classmethod
+    def tearDownClass(cls):
+        cls.driver.quit()
+
+
 class BlogPageTests(unittest.TestCase):
 
     @classmethod
@@ -126,11 +315,17 @@ class BlogPageTests(unittest.TestCase):
         TopNav(self.driver).nav_to_blog()
         # click view more posts and wait(sleep)
         BlogPage(self.driver).load_more()
-        sleep(3)
+        sleep(2)
         # count the number of cards
         posts_count = self.driver.find_elements(*BlogLocators.blog_cards_images)
         # verify the number of posts that display
         assert (len(posts_count) == 12)
+
+    def test_view_more_events(self):
+        # Verify that clicking the view more events button loads the events page
+        TopNav(self.driver).nav_to_blog()
+        BlogPage(self.driver).more_events_button()
+        assert self.driver.title == PageTitles.events
 
     @classmethod
     def tearDownClass(cls):
@@ -231,12 +426,12 @@ class FooterSocial(unittest.TestCase):
     def test_google_plus(self):
         # Verify that the google+ icon in the footer opens the correct page
         Footer(self.driver).google_plus()
-        # switch to the new tab by finding the second window handle
         TestUtils(self.driver).switch_new_tab()
         assert self.driver.current_url == PageTitles.google_plus_url
 
     def test_linkiedIn(self):
         # Verify that the google+ icon in the footer opens the correct page
+        # linkedin is opening a sign in page instead of the caktus linkedin page for the automation browser
         Footer(self.driver).linkedIn()
         # switch to the new tab by finding the second window handle
         TestUtils(self.driver).switch_new_tab()
@@ -244,87 +439,6 @@ class FooterSocial(unittest.TestCase):
 
     def tearDown(self):
         self.driver.quit()
-
-
-class ServicesTests(unittest.TestCase):
-
-    @classmethod
-    def setUpClass(cls):
-        cls.driver = webdriver.Chrome(driver_location, options=chrome_options)
-        cls.driver.set_window_size(1920, 1080)
-        cls.driver.get(url)
-
-    def test_services_first_card(self):
-        TopNav(self.driver).nav_to_services()
-        ServicesLandingPage(self.driver).first_card()
-        assert self.driver.title == PageTitles.service_card_1
-
-    def test_servicedetail_see_more(self):
-        TopNav(self.driver).nav_to_services()
-        ServicesLandingPage(self.driver).first_card()
-        ServiceDetail(self.driver).see_more()
-        assert self.driver.title == PageTitles.services
-
-    def test_servicedetail_contact_button(self):
-        TopNav(self.driver).nav_to_services()
-        ServicesLandingPage(self.driver).first_card()
-        ServiceDetail(self.driver).contact_button()
-        assert self.driver.title == PageTitles.contact
-
-    def test_services_second_card(self):
-        TopNav(self.driver).nav_to_services()
-        ServicesLandingPage(self.driver).second_card()
-        assert self.driver.title == PageTitles.service_card_2
-
-    def test_services_third_card(self):
-        TopNav(self.driver).nav_to_services()
-        ServicesLandingPage(self.driver).third_card()
-        assert self.driver.title == PageTitles.service_card_3
-
-    def test_services_fourth_card(self):
-        TopNav(self.driver).nav_to_services()
-        ServicesLandingPage(self.driver).fourth_card()
-        assert self.driver.title == PageTitles.service_card_4
-
-    def test_services_fifth_card(self):
-        TopNav(self.driver).nav_to_services()
-        ServicesLandingPage(self.driver).fifth_card()
-        assert self.driver.title == PageTitles.service_card_5
-
-    def test_services_sixth_card(self):
-        TopNav(self.driver).nav_to_services()
-        ServicesLandingPage(self.driver).sixth_card()
-        assert self.driver.title == PageTitles.service_card_6
-
-    @classmethod
-    def tearDownClass(cls):
-        cls.driver.quit()
-
-
-class ContactFormTest(unittest.TestCase):
-
-    # need to add the variable to the set up for this class
-    @classmethod
-    def setUpClass(cls):
-        cls.driver = webdriver.Chrome(driver_location, options=chrome_options)
-        cls.driver.get(url)
-        cls.driver.set_window_size(1920, 1080)
-
-    def test_contact_form(self):
-        # Use the POM class to navigate to contact page
-        TopNav(self.driver).nav_to_contact()
-        # Use the POM class to enter text in the contact form
-        ContactForm(self.driver).first_name("MRtest")
-        ContactForm(self.driver).last_name("LastName")
-        ContactForm(self.driver).email("exampl@example.com")
-        ContactForm(self.driver).submit()
-        # verify that an error is displayed for the required field that was not entered
-        element = WebDriverWait(self.driver, 10).until(lambda x: x.find_element(*CL.hubspot_error))
-        assert element.is_displayed()
-
-    @classmethod
-    def tearDownClass(cls):
-        cls.driver.quit()
 
 
 # @ddt
@@ -344,7 +458,6 @@ class EventsTests(unittest.TestCase):
         EventsPage(self.driver).event_dropdwon_select_year(year)
         # verify the year in the date field
         event_date = self.driver.find_element(*EventsPageLocators.date_on_card).text
-        # self.assertIn(year, event_date)
         self.assertIn(year, event_date)
     # uncomment out ddt/data lines, comment out/remove the year= line and add a perameter 'year' after self to use ddt
     # @data("2018", "2017", "2016", "2015", "2014", "2013", "2012")
