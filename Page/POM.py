@@ -4,7 +4,7 @@ from selenium.webdriver.support import expected_conditions as EC
 from selenium.webdriver.support.ui import WebDriverWait
 from selenium.webdriver.support.ui import Select
 from Page.Locators import TopNavLocators, FooterLocators, HomepageLocators, BlogLocators, ServicesLocators, \
-    EventsPageLocators, ContactLocators
+    EventsPageLocators, ContactLocators, AboutUsLocators
 
 # This file does all of the click and other actions
 
@@ -21,10 +21,6 @@ class TopNav(Base):
         link = self.driver.find_element(*TopNavLocators.logo)
         link.click()
 
-    def nav_to_blog(self):
-        link = self.driver.find_element(*TopNavLocators.blog)
-        link.click()
-
     def nav_to_services(self):
         link = self.driver.find_element(*TopNavLocators.services)
         link.click()
@@ -37,25 +33,16 @@ class TopNav(Base):
         link = self.driver.find_element(*TopNavLocators.about_us)
         link.click()
 
-    def nav_to_contact(self):
-        link = self.driver.find_element(*TopNavLocators.contact)
+    def nav_to_careers(self):
+        link = self.driver.find_element(*TopNavLocators.careers)
         link.click()
 
+    def nav_to_blog(self):
+        link = self.driver.find_element(*TopNavLocators.blog)
+        link.click()
 
-class ContactForm(Base):
-
-    def first_name(self, first_name):
-        self.driver.find_element(*ContactLocators.first_name).send_keys(first_name)
-
-    def last_name(self, last_name):
-        self.driver.find_element(*ContactLocators.last_name).send_keys(last_name)
-
-    def email(self, email):
-        self.driver.find_element(*ContactLocators.email).send_keys(email)
-
-    def submit(self):
-        link = self.driver.find_element(*ContactLocators.send_button)
-        WebDriverWait(self.driver, 10).until(lambda x: x.find_element(*ContactLocators.send_button))
+    def nav_to_contact(self):
+        link = self.driver.find_element(*TopNavLocators.contact)
         link.click()
 
 
@@ -127,17 +114,6 @@ class Homepage(Base):
         link.click()
 
 
-class EventsPage(Base):
-
-    def event_dropdwon_select_year(self, value):
-        WebDriverWait(self.driver, 10).until(lambda x: x.find_element(*EventsPageLocators.dropdown))
-        select = Select(self.driver.find_element(*EventsPageLocators.dropdown))
-        select.select_by_value(value)
-
-    def date_field(self):
-        self.driver.find_elements(*EventsPageLocators.date_on_card)
-
-
 class ServicesLandingPage(Base):
     # need to figure out waits with the locators file
     def first_card(self):
@@ -177,11 +153,79 @@ class ServiceDetail(Base):
         link.click()
 
 
+class AboutUs(Base):
+
+    def meet_our_team_button(self):
+        link = self.driver.find_element(*AboutUsLocators.meet_team_button)
+        link.click()
+
+    def browse_contributions_button(self):
+        link = self.driver.find_element(*AboutUsLocators.browse_our_contributions)
+        link.click()
+
+    def women_in_tech_click(self):
+        link = self.driver.find_element(*AboutUsLocators.women_in_tech)
+        link.click()
+
+    def code_durham_click(self):
+        link = self.driver.find_element(*AboutUsLocators.code_for_durham)
+        link.click()
+
+    def girl_dev_it_click(self):
+        link = self.driver.find_element(*AboutUsLocators.girl_dev_it_rdu)
+        link.click()
+
+    def pyladies_click(self):
+        link = self.driver.find_element(*AboutUsLocators.pyladies)
+        link.click()
+
+    def trianglepython_click(self):
+        link = self.driver.find_element(*AboutUsLocators.trianglepython)
+        link.click()
+
+    def django_girls_click(self):
+        link = self.driver.find_element(*AboutUsLocators.django_girls)
+        link.click()
+
+    def view_more_press_button(self):
+        link = self.driver.find_element(*AboutUsLocators.view_more_press)
+        link.click()
+
+    def colin_bio(self):
+        link = self.driver.find_element(*AboutUsLocators.colin)
+        link.click()
+
+    def were_hiring_button(self):
+        link = self.driver.find_element(*AboutUsLocators.were_hiring)
+        link.click()
+
+
 class BlogPage(Base):
 
     def load_more(self):
         link = self.driver.find_element(*BlogLocators.load_more)
         WebDriverWait(self.driver, 10).until(lambda x: x.find_element(*BlogLocators.load_more))
+        link.click()
+
+    def more_events_button(self):
+        link = self.driver.find_element(*BlogLocators.view_more_events)
+        link.click()
+
+
+class ContactForm(Base):
+
+    def first_name(self, first_name):
+        self.driver.find_element(*ContactLocators.first_name).send_keys(first_name)
+
+    def last_name(self, last_name):
+        self.driver.find_element(*ContactLocators.last_name).send_keys(last_name)
+
+    def email(self, email):
+        self.driver.find_element(*ContactLocators.email).send_keys(email)
+
+    def submit(self):
+        link = self.driver.find_element(*ContactLocators.send_button)
+        WebDriverWait(self.driver, 10).until(lambda x: x.find_element(*ContactLocators.send_button))
         link.click()
 
 
@@ -249,9 +293,20 @@ class Footer(Base):
         link.click()
 
 
+class EventsPage(Base):
+
+    def event_dropdwon_select_year(self, value):
+        WebDriverWait(self.driver, 10).until(lambda x: x.find_element(*EventsPageLocators.dropdown))
+        select = Select(self.driver.find_element(*EventsPageLocators.dropdown))
+        select.select_by_value(value)
+
+    def date_field(self):
+        self.driver.find_elements(*EventsPageLocators.date_on_card)
+
+
 class TestUtils(Base):
 
     def switch_new_tab(self):
-        # this probably doesn't belong here
+        # switch to the new tab by finding the second window handle
         tabs = self.driver.window_handles
         self.driver.switch_to.window(tabs[1])
