@@ -1,10 +1,7 @@
-from selenium import webdriver
-from selenium.webdriver.common.by import By
-from selenium.webdriver.support import expected_conditions as EC
 from selenium.webdriver.support.ui import WebDriverWait
 from selenium.webdriver.support.ui import Select
-from Page.Locators import TopNavLocators, FooterLocators, HomepageLocators, BlogLocators, ServicesLocators, \
-    EventsPageLocators, ContactLocators, AboutUsLocators
+from Page.Locators import (TopNavLocators, FooterLocators, HomepageLocators, BlogLocators, ServicesLocators,
+                           EventsLocators, ContactLocators, AboutUsLocators)
 
 # This file does all of the click and other actions
 
@@ -17,104 +14,104 @@ class Base(object):
 
 class TopNav(Base):
 
-    def nav_to_homepage(self):
+    def logo(self):
         link = self.driver.find_element(*TopNavLocators.logo)
         link.click()
 
-    def nav_to_services(self):
+    def services(self):
         link = self.driver.find_element(*TopNavLocators.services)
         link.click()
 
-    def nav_to_ourwork(self):
+    def our_work(self):
         link = self.driver.find_element(*TopNavLocators.our_work)
         link.click()
 
-    def nav_to_aboutus(self):
+    def about_us_nav(self):
         link = self.driver.find_element(*TopNavLocators.about_us)
         link.click()
 
-    def nav_to_careers(self):
+    def careers(self):
         link = self.driver.find_element(*TopNavLocators.careers)
         link.click()
 
-    def nav_to_blog(self):
+    def blog(self):
         link = self.driver.find_element(*TopNavLocators.blog)
         link.click()
 
-    def nav_to_contact(self):
+    def contact(self):
         link = self.driver.find_element(*TopNavLocators.contact)
         link.click()
 
 
 class Homepage(Base):
 
-    def click_hero_image_button(self):
+    def hero_image_button(self):
         hero_button = self.driver.find_element(*HomepageLocators.hero_button)
         WebDriverWait(self.driver, 10).until(lambda x: x.find_element(*HomepageLocators.hero_button))
         hero_button.click()
 
-    def click_featured_case_study(self):
+    def featured_case_study(self):
         link = self.driver.find_element(*HomepageLocators.featured_case_study)
         WebDriverWait(self.driver, 10).until(lambda x: x.find_element(*HomepageLocators.featured_case_study))
         link.click()
 
-    def click_why_caktus_success_model(self):
+    def why_caktus_success_model(self):
         link = self.driver.find_element(*HomepageLocators.success_model)
         WebDriverWait(self.driver, 10).until(lambda x: x.find_element(*HomepageLocators.success_model))
         link.click()
 
-    def click_service_card_1(self):
+    def service_card_1(self):
         link = self.driver.find_element(*HomepageLocators.service_card_1)
         WebDriverWait(self.driver, 10).until(lambda x: x.find_element(*HomepageLocators.service_card_1))
         link.click()
 
-    def click_service_card_2(self):
+    def service_card_2(self):
         link = self.driver.find_element(*HomepageLocators.service_card_2)
         WebDriverWait(self.driver, 10).until(lambda x: x.find_element(*HomepageLocators.service_card_2))
         link.click()
 
-    def click_service_card_3(self):
+    def service_card_3(self):
         link = self.driver.find_element(*HomepageLocators.service_card_3)
         WebDriverWait(self.driver, 10).until(lambda x: x.find_element(*HomepageLocators.service_card_3))
         link.click()
 
-    def click_service_card_4(self):
+    def service_card_4(self):
         link = self.driver.find_element(*HomepageLocators.service_card_4)
         WebDriverWait(self.driver, 10).until(lambda x: x.find_element(*HomepageLocators.service_card_4))
         link.click()
 
-    def click_service_card_5(self):
+    def service_card_5(self):
         link = self.driver.find_element(*HomepageLocators.service_card_5)
         WebDriverWait(self.driver, 10).until(lambda x: x.find_element(*HomepageLocators.service_card_5))
         link.click()
 
-    def click_service_card_6(self):
+    def service_card_6(self):
         link = self.driver.find_element(*HomepageLocators.service_card_6)
         WebDriverWait(self.driver, 10).until(lambda x: x.find_element(*HomepageLocators.service_card_6))
         link.click()
 
-    def click_view_services_button(self):
+    def view_services_button(self):
         link = self.driver.find_element(*HomepageLocators.view_services_button)
         WebDriverWait(self.driver, 10).until(lambda x: x.find_element(*HomepageLocators.view_services_button))
         link.click()
 
-    def click_read_our_case_studies(self):
+    def read_our_case_studies(self):
         link = self.driver.find_element(*HomepageLocators.read_our_case_studies_button)
         WebDriverWait(self.driver, 10).until(lambda x: x.find_element(*HomepageLocators.read_our_case_studies_button))
         link.click()
 
-    def click_resources_blog_card_title(self):
+    def resources_blog_card_title(self):
         link = self.driver.find_element(*HomepageLocators.blog_card_title)
         WebDriverWait(self.driver, 10).until(lambda x: x.find_element(*HomepageLocators.blog_card_title))
         link.click()
 
-    def click_resources_tech_talks_card_title(self):
+    def resources_tech_talks_card_title(self):
         link = self.driver.find_element(*HomepageLocators.tech_talks_card_title)
         WebDriverWait(self.driver, 10).until(lambda x: x.find_element(*HomepageLocators.tech_talks_card_title))
         link.click()
 
 
-class ServicesLandingPage(Base):
+class Services(Base):
     # need to figure out waits with the locators file
     def first_card(self):
         link = self.driver.find_element(*ServicesLocators.card_1)
@@ -126,7 +123,6 @@ class ServicesLandingPage(Base):
 
     def third_card(self):
         link = self.driver.find_element(*ServicesLocators.card_3)
-
         link.click()
 
     def fourth_card(self):
@@ -163,27 +159,27 @@ class AboutUs(Base):
         link = self.driver.find_element(*AboutUsLocators.browse_our_contributions)
         link.click()
 
-    def women_in_tech_click(self):
+    def women_in_tech(self):
         link = self.driver.find_element(*AboutUsLocators.women_in_tech)
         link.click()
 
-    def code_durham_click(self):
+    def code_durham(self):
         link = self.driver.find_element(*AboutUsLocators.code_for_durham)
         link.click()
 
-    def girl_dev_it_click(self):
+    def girl_dev_it(self):
         link = self.driver.find_element(*AboutUsLocators.girl_dev_it_rdu)
         link.click()
 
-    def pyladies_click(self):
+    def pyladies(self):
         link = self.driver.find_element(*AboutUsLocators.pyladies)
         link.click()
 
-    def trianglepython_click(self):
+    def trianglepython(self):
         link = self.driver.find_element(*AboutUsLocators.trianglepython)
         link.click()
 
-    def django_girls_click(self):
+    def django_girls(self):
         link = self.driver.find_element(*AboutUsLocators.django_girls)
         link.click()
 
@@ -200,7 +196,7 @@ class AboutUs(Base):
         link.click()
 
 
-class BlogPage(Base):
+class Blog(Base):
 
     def load_more(self):
         link = self.driver.find_element(*BlogLocators.load_more)
@@ -209,6 +205,14 @@ class BlogPage(Base):
 
     def more_events_button(self):
         link = self.driver.find_element(*BlogLocators.view_more_events)
+        link.click()
+
+    def testing_qa_filter(self):
+        link = self.driver.find_element(*BlogLocators.test_qa_topic)
+        link.click()
+
+    def technical_filter(self):
+        link = self.driver.find_element(*BlogLocators.technical_topic)
         link.click()
 
 
@@ -232,7 +236,6 @@ class ContactForm(Base):
 class Footer(Base):
 
     def quick_links_services(self):
-        # getting an error on the link.click link of the following:
         link = self.driver.find_element(*FooterLocators.services)
         link.click()
 
@@ -288,20 +291,20 @@ class Footer(Base):
         link = self.driver.find_element(*FooterLocators.google_plus_icon)
         link.click()
 
-    def linkedIn(self):
+    def linkedin(self):
         link = self.driver.find_element(*FooterLocators.linkedIn)
         link.click()
 
 
-class EventsPage(Base):
+class Events(Base):
 
-    def event_dropdwon_select_year(self, value):
-        WebDriverWait(self.driver, 10).until(lambda x: x.find_element(*EventsPageLocators.dropdown))
-        select = Select(self.driver.find_element(*EventsPageLocators.dropdown))
+    def event_dropdown_select_year(self, value):
+        WebDriverWait(self.driver, 10).until(lambda x: x.find_element(*EventsLocators.dropdown))
+        select = Select(self.driver.find_element(*EventsLocators.dropdown))
         select.select_by_value(value)
 
     def date_field(self):
-        self.driver.find_elements(*EventsPageLocators.date_on_card)
+        self.driver.find_elements(*EventsLocators.date_on_card)
 
 
 class TestUtils(Base):
@@ -310,3 +313,7 @@ class TestUtils(Base):
         # switch to the new tab by finding the second window handle
         tabs = self.driver.window_handles
         self.driver.switch_to.window(tabs[1])
+
+    def close_cookie_banner(self):
+        link = self.driver.find_element(*TopNavLocators.x_cookie_banner)
+        link.click()
