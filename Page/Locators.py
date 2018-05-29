@@ -1,13 +1,9 @@
 from selenium.webdriver.common.by import By
-from selenium.webdriver.support import expected_conditions as EC
-from selenium import webdriver
-from selenium.webdriver.support.ui import WebDriverWait
 
 # this file finds all the elements on the page
 
 
 class TopNavLocators(object):
-
     logo = (By.CLASS_NAME, "navbar-brand")
     services = (By.CLASS_NAME, "service-page")
     our_work = (By.CLASS_NAME, "our-work")
@@ -15,14 +11,14 @@ class TopNavLocators(object):
     careers = (By.CLASS_NAME, "careers")
     blog = (By.CLASS_NAME, "posts")
     contact = (By.CLASS_NAME, "contact")
+    x_cookie_banner = (By.CLASS_NAME, "iubenda-cs-close-btn")
 
 
 class FooterLocators(object):
-
     services = (By.XPATH, """//*[@class="half site-map"]/ul/li[%s]/a""" % 1)
     our_work = (By.XPATH, """//*[@class="half site-map"]/ul/li[%s]/a""" % 2)
     about_us = (By.XPATH, """//*[@class="half site-map"]/ul/li[%s]/a""" % 3)
-    blog = (By.XPATH, """//*[@class="half site-map"]/ul/li[%s]/a""" % 4)
+    blog = (By.XPATH, """//*[@class="half site-map"]/ul/li[4]/a""")
     careers = (By.XPATH, """//*[@class="half site-map"]/ul/li[%s]/a""" % 5)
     events = (By.XPATH, """//*[@class="half site-map"]/ul/li[%s]/a""" % 6)
     talks = (By.XPATH, """//*[@class="half site-map"]/ul/li[%s]/a""" % 7)
@@ -48,16 +44,15 @@ class HomepageLocators(object):
     service_card_5 = (By.XPATH, """//*[@class="card-wrapper full"]/li[%s]/a""" % 5)
     service_card_6 = (By.XPATH, """//*[@class="card-wrapper full"]/li[%s]/a""" % 6)
     view_services_button = (By.XPATH, """//*[@id="our-services"]/div/div/a""")
-    # casestudies section
+    # case studies section
     featured_case_study = (By.CLASS_NAME, "card-case-study")
     read_our_case_studies_button = (By.XPATH, """//*[@id="case-studies-showcase"]/div/div[2]/a""")
-    # rescources section
+    # resources section
     blog_card_title = (By.XPATH, """//*[@id="our-resources"]/div/ul/li[1]/h3/a""")
     tech_talks_card_title = (By.XPATH, """//*[@id="our-resources"]/div/ul/li[3]/h3/a""")
 
 
 class ServicesLocators(object):
-
     card_1 = (By.XPATH, """//*[@class="card-wrapper full"]/li[1]""")
     card_2 = (By.XPATH, """//*[@class="card-wrapper full"]/li[2]""")
     card_3 = (By.XPATH, """//*[@class="card-wrapper full"]/li[3]""")
@@ -69,13 +64,11 @@ class ServicesLocators(object):
 
 
 class OurWorkLocators(object):
-
     card_1 = ()
 
 
 class AboutUsLocators(object):
-
-    # tech commnunity links:
+    # tech community links:
     meet_team_button = (By.ID, "scroll-to-team")
     browse_our_contributions = (By.XPATH, """//*[@id="open-source-leadership"]/div/div/a""")
     women_in_tech = (By.LINK_TEXT, "Durham Women in Tech")
@@ -91,14 +84,19 @@ class AboutUsLocators(object):
 
 
 class BlogLocators(object):
-
     load_more = (By.XPATH, """//*[@id="next"]""")
     blog_cards_images = (By.CLASS_NAME, "card-common--image_container")
     view_more_events = (By.XPATH, """//*[@class="home-page"]/div[2]/a""")
+    # topic filters
+    test_qa_topic = (By.XPATH, """//*[@class="topic-categories three-quarters"]/ul/li[6]""")
+    technical_topic = (By.XPATH, """//*[@class="topic-categories three-quarters"]/ul/li[2]""")
+    # card topics
+    first_card_topics = (By.XPATH, """//*[@id="our-blog"]/div/ul/li[1]/div[2]/div[1]""")
+    second_card_topics = (By.XPATH, """//*[@id="our-blog"]/div/ul/li[2]/div[2]/div[1]""")
+    third_card_topics = (By.XPATH, """//*[@id="our-blog"]/div/ul/li[3]/div[2]/div[1]""")
 
 
 class ContactLocators(object):
-
     first_name = (By.NAME, "firstname")
     last_name = (By.NAME, "lastname")
     email = (By.NAME, "email")
@@ -110,8 +108,7 @@ class ContactLocators(object):
     send_button = (By.XPATH, """//*[@class="actions"]/input""")
 
 
-class EventsPageLocators(object):
-
+class EventsLocators(object):
     dropdown = (By.ID, "event-year")
     date_on_card = (By.CLASS_NAME, "call-out")
 
@@ -141,7 +138,6 @@ class PageTitles(object):
     privacy_policy = "Privacy Policy | Caktus Group"
     featured_casestudy = "Live Event Management App | Caktus Group"
     colin = "Colin Copeland | Caktus Group"
-
     # social media pages
     twitter = "Caktus Group (@CaktusGroup) | Twitter"
     # using URL for this instead of title b/c title wasn't working
@@ -150,7 +146,6 @@ class PageTitles(object):
     google_plus_url = "https://plus.google.com/105062754987823868923"
     linkedIn_url = "https://www.linkedin.com/company/caktus-consulting-group-llc"
     linkedIn_title = "LinkedIn: Log In or Sign Up"
-
     # About us tech community link titles
     durham_women_in_tech = "Durham Women in Tech (Durham, NC) | Meetup"
     code_for_durham = "Code for Durham"
@@ -158,4 +153,3 @@ class PageTitles(object):
     pyladies = "PyLadies – Women Who Love Coding in Python"
     trianlgepython_url = "http://tripython.org/"
     django_girls = "Django Girls - start your journey with programming"
-
